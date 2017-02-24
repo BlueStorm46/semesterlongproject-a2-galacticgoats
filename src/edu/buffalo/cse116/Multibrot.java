@@ -20,7 +20,7 @@ public class Multibrot {
 		  
 		  for (int x = 0; x < grid.length; x++) {
 			  for (int y = 0; y < grid[x].length; y++) {
-				  	grid[x][y] = escapetime((-1 + 1)/512 , (-1.3 + 1.3)/512);
+				  	grid[x][y] = escapetime((Math.pow(x,3) - (3 * x * Math.pow(y, 2))) + x , (3 * Math.pow(x,2) * y)- Math.pow(x,3) + y);
 				  }	
 			  }
 			  return grid; 

@@ -15,5 +15,16 @@ public class MultibrotTest {
 		assertEquals(5, MultiSet.escapetime(0.5859375, 0.24375000000000108));
 		
 	}
+	
+	@Test
+	public void test2() {
+		Multibrot MultiSet = new Multibrot();
+		MultiSet.escapetime(0.9921875, 1.05625);
+		System.out.println(MultiSet.escapetime(0.9921875, 1.05625));
+		assertEquals(1, MultiSet.escapetime(0.9921875, 1.05625));
+	}
+		
+	
+	
 
 }
