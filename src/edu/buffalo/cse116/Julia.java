@@ -2,25 +2,25 @@ package edu.buffalo.cse116;
 
 public class Julia {
 
-	public double escapetime(double xCalc, double yCalc) {
+	public double escapeTime(double xCalc, double yCalc) {
 		double distance = Math.sqrt(Math.pow(xCalc, 2) + Math.pow(yCalc, 2));
 		int passes = 0;
 		while (distance <= 2 && passes < 255) {
-			// System.out.println("hello");
-			xCalc = ((Math.pow(xCalc, 2) - Math.pow(yCalc, 2)) - 0.73);
-			yCalc = (2 * xCalc * yCalc) + 0.19;
+			/** x' = x² - y² + -0.72689
+				y' = 2 * x * y + 0.188887
+			   		Where x and y are the values of xCalc and yCalc prior to this update and x' and y' are their values after the update. */
+			xCalc = ((Math.pow(xCalc, 2) - Math.pow(yCalc, 2)) + -0.72689);
+			yCalc = (2 * xCalc * yCalc) + 0.188887;
 			passes = passes + 1;
 			distance = Math.sqrt(Math.pow(xCalc, 2) + Math.pow(yCalc, 2));
 		}
-		// System.out.println(passes);
-		// if (distance != 0 ){
-		// System.out.println("distance :" + distance);
-		// }
 		return passes;
 	}
 
 	public double[][] createJulia() {
 		Julia j = new Julia();
+		/** X-coordinate range from -1.7 to 1.7
+			Y-coordinate range from -1.0 to 1.0 */
 		double x_s = -1.7, x_e = 1.7;
 		double y_s = -1.0, y_e = 1.0;
 		double interval_x = (Math.abs(x_s) + Math.abs(x_e)) / 512;
@@ -32,7 +32,7 @@ public class Julia {
 			x_c = x_c + interval_x;
 			for (int y = 0; y < 512; y++) {
 				y_c = y_c + interval_y;
-				grid[x][y] = j.escapetime(x_c, y_c);
+				grid[x][y] = j.escapeTime(x_c, y_c);
 			}
 			y_c = 0;
 		}

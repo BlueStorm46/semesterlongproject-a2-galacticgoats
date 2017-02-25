@@ -2,25 +2,29 @@ package edu.buffalo.cse116;
 
 public class BurningShip {
 
-	public double escapetime(double xCalc, double yCalc) {
+	public double escapeTime(double xCalc, double yCalc) {
 		double distance = Math.sqrt(Math.pow(xCalc, 2) + Math.pow(yCalc, 2));
 		int passes = 0;
+		double xCord = xCalc; // Current point's x-coordinate
+		double yCord = yCalc; // Current point's y-coordinate
 		while (distance <= 2 && passes < 255) {
-			// System.out.println("hello");
-			xCalc = ((Math.pow(xCalc, 2) - Math.pow(yCalc, 2)) + xCalc);
-			yCalc = Math.abs(2 * xCalc * yCalc) + yCalc;
+			/** x' = x² - y² + current point's x-coordinate
+				y' = Math.abs(2 * x * y) + current point's y-coordinate
+			   		Where x and y are the values of xCalc and yCalc prior to this update and x' and y' are their values after the update. */
+			double tempX = xCalc; // x
+			double tempY = yCalc; // y
+			xCalc = ((Math.pow(tempX, 2) - Math.pow(tempY, 2)) + xCord);
+			yCalc = Math.abs(2 * tempX * tempY) + yCord;
 			passes = passes + 1;
-			distance = Math.sqrt(Math.pow(xCalc, 2) + Math.pow(yCalc, 2));
+			distance = Math.sqrt(Math.pow(xCalc, 2) + Math.pow(yCord, 2));
 		}
-		// System.out.println(passes);
-		// if (distance != 0 ){
-		// System.out.println("distance :" + distance);
-		// }
 		return passes;
 	}
 
 	public double[][] createBS() {
 		BurningShip b = new BurningShip();
+		/** X-coordinate range from -1.8 to -1.7
+			Y-coordinate range from -0.08 to 0.025 */
 		double x_s = -1.8, x_e = -1.7;
 		double y_s = -0.08, y_e = 0.025;
 		double interval_x = (Math.abs(x_s) + Math.abs(x_e)) / 512;
@@ -32,11 +36,10 @@ public class BurningShip {
 			x_c = x_c + interval_x;
 			for (int y = 0; y < 512; y++) {
 				y_c = y_c + interval_y;
-				grid[x][y] = b.escapetime(x_c, y_c);
+				grid[x][y] = b.escapeTime(x_c, y_c);
 			}
 			y_c = 0;
 		}
 		return grid;
 	}
-
 }
