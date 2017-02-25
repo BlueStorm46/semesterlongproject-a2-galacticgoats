@@ -21,5 +21,22 @@ public class MandelbrotTest {
 		System.out.println(mandelSet.escapetime(0.5946289062500001, 1.2949218750000122));
 		assertEquals(255, mandelSet.escapetime(0.5946289062500001, 1.2949218750000122), 0);
 	}
+		
+		@Test
+		public void testXaxis() {
+			Mandelbrot mandelSet = new Mandelbrot();
+			assertEquals(0, mandelSet.createMandel()[372][0], 0);
+	}
+		@Test
+		public void testyaxis() {
+			Mandelbrot mandelSet = new Mandelbrot();
+			assertEquals(0, mandelSet.createMandel()[0][393], 0);
+	}
+		@Test
+		public void fractalSizeTest() { 
+			Mandelbrot mandelSet = new Mandelbrot();
+			assertEquals(512, mandelSet.createMandel()[0].length, 0);
+			assertEquals(512, mandelSet.createMandel().length, 0);
+		}
 
 }
