@@ -12,10 +12,6 @@ public class BurningShip {
 			passes = passes + 1;
 			distance = Math.sqrt(Math.pow(xCalc, 2) + Math.pow(yCalc, 2));
 		}
-		// System.out.println(passes);
-		// if (distance != 0 ){
-		// System.out.println("distance :" + distance);
-		// }
 		return passes;
 	}
 

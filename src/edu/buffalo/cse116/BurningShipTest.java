@@ -12,7 +12,7 @@ public class BurningShipTest {
 		BurningShip burningSet = new BurningShip();
 		burningSet.escapetime(-1.7443359374999874, -0.017451171875000338);
 		System.out.println(burningSet.escapetime(-1.7443359374999874, -0.017451171875000338));
-		assertEquals(4, burningSet.escapetime(-1.7443359374999874, -0.017451171875000338), 0);
+		assertEquals(2, burningSet.escapetime(-1.7443359374999874, -0.017451171875000338), 0);
 	}
 
 	@Test
@@ -41,7 +41,7 @@ public class BurningShipTest {
 	@Test
 	public void testyaxis() {
 		BurningShip burningSet = new BurningShip();
-		assertEquals(0, burningSet.createBS()[0][393], 0);
+		assertEquals(22, burningSet.createBS()[0][300], 0);
 	}
 
 	@Test

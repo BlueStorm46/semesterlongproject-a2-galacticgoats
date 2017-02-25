@@ -7,8 +7,8 @@ public class Julia {
 		int passes = 0;
 		while (distance <= 2 && passes < 255) {
 			// System.out.println("hello");
-			xCalc = ((Math.pow(xCalc, 2) - Math.pow(yCalc, 2)) - 0.73);
-			yCalc = (2 * xCalc * yCalc) + 0.19;
+			xCalc = ((Math.pow(xCalc, 2) - Math.pow(yCalc, 2)) - 0.72689);
+			yCalc = (2 * xCalc * yCalc) + 0.188887;
 			passes = passes + 1;
 			distance = Math.sqrt(Math.pow(xCalc, 2) + Math.pow(yCalc, 2));
 		}
