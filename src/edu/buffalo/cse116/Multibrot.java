@@ -35,7 +35,6 @@ public class Multibrot {
 				  }
 			  	y_c = 0;
 			  }
-		  System.out.println(grid[512][0]);
 			  return grid; 
 		  }
 	}

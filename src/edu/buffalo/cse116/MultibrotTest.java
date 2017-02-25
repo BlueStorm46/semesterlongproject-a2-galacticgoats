@@ -8,7 +8,7 @@ import org.junit.Test;
 public class MultibrotTest {
 
 	@Test
-	public void test() {
+	public void neverExceedDistance() {
 		Multibrot multiSet = new Multibrot();
 		multiSet.escapetime(0.5859375 , 0.24375000000000108);
 		System.out.println(multiSet.escapetime(0.5859375 , 0.24375000000000108));
@@ -17,7 +17,7 @@ public class MultibrotTest {
 	}
 	
 	@Test
-	public void test2() {
+	public void neverSingleloop() {
 		Multibrot multiSet = new Multibrot();
 		multiSet.escapetime(0.9921875, 1.05625);
 		System.out.println(multiSet.escapetime(0.9921875, 1.05625));
