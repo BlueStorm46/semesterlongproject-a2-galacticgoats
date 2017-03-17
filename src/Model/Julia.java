@@ -1,8 +1,8 @@
-package edu.buffalo.cse116;
+package Model;
 
 public class Julia {
 
-	public double escapeTime(double xCalc, double yCalc) {
+	public int escapeTime(double xCalc, double yCalc) {
 		double distance = Math.sqrt(Math.pow(xCalc, 2) + Math.pow(yCalc, 2));
 		int passes = 0;
 		while (distance <= 2 && passes < 255) {
@@ -17,7 +17,7 @@ public class Julia {
 		return passes;
 	}
 
-	public double[][] createJulia() {
+	public int[][] createJulia() {
 		Julia j = new Julia();
 		/** X-coordinate range from -1.7 to 1.7
 			Y-coordinate range from -1.0 to 1.0 */
@@ -26,7 +26,7 @@ public class Julia {
 		double interval_x = (Math.abs(x_s) + Math.abs(x_e)) / 512;
 		double interval_y = (Math.abs(y_s) + Math.abs(y_e)) / 512;
 		double x_c = 0, y_c = 0;
-		double[][] grid = new double[512][512];
+		int[][] grid = new int[512][512];
 
 		for (int x = 0; x < 512; x++) {
 			x_c = x_c + interval_x;

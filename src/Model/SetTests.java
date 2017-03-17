@@ -1,4 +1,4 @@
-package edu.buffalo.cse116;
+package Model;
 
 import static org.junit.Assert.*;
 import org.junit.Test;

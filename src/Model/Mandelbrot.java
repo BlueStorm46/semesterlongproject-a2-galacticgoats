@@ -1,8 +1,9 @@
-package edu.buffalo.cse116;
+package Model;
+
 
 public class Mandelbrot {
 
-	public double escapeTime(double xCalc, double yCalc) {
+	public int escapeTime(double xCalc, double yCalc) {
 		double distance = Math.sqrt(Math.pow(xCalc, 2) + Math.pow(yCalc, 2));
 		int passes = 0;
 		double xCord = xCalc; // Current point's x-coordinate
@@ -21,7 +22,7 @@ public class Mandelbrot {
 		return passes;
 	}
 
-	public double[][] createMandel() { 
+	public int[][] createMandel() { 
 		Mandelbrot ma = new Mandelbrot();
 		/** X-coordinate range from -2.15 to 0.6
 			Y-coordinate range from -1.3 to 1.3 */
@@ -30,7 +31,7 @@ public class Mandelbrot {
 		double interval_x = (Math.abs(x_s) + Math.abs(x_e)) / 512;
 		double interval_y = (Math.abs(y_s) + Math.abs(y_e)) / 512;
 		double x_c = 0, y_c = 0;
-		double[][] grid = new double[512][512];
+		int[][] grid = new int[512][512];
 
 		for (int x = 0; x < 512; x++) {
 			x_c = x_c + interval_x;
@@ -42,4 +43,5 @@ public class Mandelbrot {
 		} 
 		return grid; 
 	}
+	
 } 

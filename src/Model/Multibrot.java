@@ -1,4 +1,4 @@
-package edu.buffalo.cse116;
+package Model;
 
 public class Multibrot {
 
@@ -21,7 +21,7 @@ public class Multibrot {
 		return passes;
 	}
 
-	public double[][] createMulti() {
+	public int[][] createMulti() {
 		Multibrot mu = new Multibrot();
 		/** X-coordinate range from -1 to 1
 			Y-coordinate range from -1.3 to 1.3 */
@@ -30,7 +30,7 @@ public class Multibrot {
 		double interval_x = (Math.abs(x_s) + Math.abs(x_e)) / 512;
 		double interval_y = (Math.abs(y_s) + Math.abs(y_e)) / 512;
 		double x_c = 0, y_c = 0;
-		double[][] grid = new double[512][512];
+		int[][] grid = new int[512][512];
 
 		for (int x = 0; x < 512; x++) {
 			x_c = x_c + interval_x;
