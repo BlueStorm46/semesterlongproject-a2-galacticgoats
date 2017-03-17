@@ -2,15 +2,17 @@ package Model;
 
 public class Julia {
 
-	public int escapeTime(double xCalc, double yCalc) {
+	public double escapeTime(double xCalc, double yCalc, int escapeDistance) {
 		double distance = Math.sqrt(Math.pow(xCalc, 2) + Math.pow(yCalc, 2));
 		int passes = 0;
-		while (distance <= 2 && passes < 255) {
+		while (distance <= escapeDistance && passes < 255) {
 			/** x' = x² - y² + -0.72689
 				y' = 2 * x * y + 0.188887
 			   		Where x and y are the values of xCalc and yCalc prior to this update and x' and y' are their values after the update. */
-			xCalc = ((Math.pow(xCalc, 2) - Math.pow(yCalc, 2)) + -0.72689);
-			yCalc = (2 * xCalc * yCalc) + 0.188887;
+			double tempX = xCalc; // x
+			double tempY = yCalc; // y
+			xCalc = ((Math.pow(tempX, 2) - Math.pow(tempY, 2)) + -0.72689);
+			yCalc = (2 * tempX * tempY) + 0.188887;
 			passes = passes + 1;
 			distance = Math.sqrt(Math.pow(xCalc, 2) + Math.pow(yCalc, 2));
 		}
@@ -32,7 +34,7 @@ public class Julia {
 			x_c = x_c + interval_x;
 			for (int y = 0; y < 512; y++) {
 				y_c = y_c + interval_y;
-				grid[x][y] = j.escapeTime(x_c, y_c);
+				grid[x][y] = (int) j.escapeTime(x_c, y_c, 3); // Not supposed to be 3. Not sure what to put here.
 			}
 			y_c = 0;
 		}
