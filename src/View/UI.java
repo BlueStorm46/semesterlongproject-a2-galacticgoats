@@ -3,6 +3,7 @@ package View;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.EventHandler;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -28,11 +29,13 @@ public class UI {
 	FractalPanel fp;
 	JFrame frame;
 	JMenuBar menuBar;
+	JPanel panel;
 
 	public void createPanel() {
 
 		fp = new FractalPanel();
 		frame = new JFrame("Fractal Panel");
+		panel = new JPanel();
 		menuBar = new JMenuBar();
 
 		JMenu file = new JMenu("File");
@@ -63,7 +66,7 @@ public class UI {
 		burningShip.addActionListener(bs);
 		ActionListener mu = new MultibrotHandler();
 		multibrot.addActionListener(mu);
-		//
+
 		// Adding colors schemes to Color Menu bar
 		JMenuItem red = new JMenuItem("Red");
 		JMenuItem green = new JMenuItem("Green");
@@ -97,10 +100,12 @@ public class UI {
 	public class MandelbrotEventHandler implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			panel.removeAll();
 			Mandelbrot mb = new Mandelbrot();
 			fp = new FractalPanel();
 			fp.updateImage(mb.createMandel());
-			frame.add(fp);
+			panel.add(fp);
+			frame.add(panel);
 			frame.pack();
 
 		}
@@ -109,10 +114,12 @@ public class UI {
 	public class JuliaEventHandler implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			panel.removeAll();
 			Julia j = new Julia();
 			fp = new FractalPanel();
 			fp.updateImage(j.createJulia());
-			frame.add(fp);
+			panel.add(fp);
+			frame.add(panel);
 			frame.pack();
 
 		}
@@ -121,10 +128,12 @@ public class UI {
 	public class BurningShipHandler implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			panel.removeAll();
 			BurningShip bs = new BurningShip();
 			fp = new FractalPanel();
 			fp.updateImage(bs.createBS());
-			frame.add(fp);
+			panel.add(fp);
+			frame.add(panel);
 			frame.pack();
 		}
 	}
@@ -132,10 +141,12 @@ public class UI {
 	public class MultibrotHandler implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			panel.removeAll();
 			Multibrot mu = new Multibrot();
 			fp = new FractalPanel();
 			fp.updateImage(mu.createMulti());
-			frame.add(fp);
+			panel.add(fp);
+			frame.add(panel);
 			frame.pack();
 
 		}
