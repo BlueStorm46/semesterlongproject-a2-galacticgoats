@@ -33,13 +33,14 @@ public class UI {
 	JPanel panel;
 	int currentFractal = 0;
 	private int currentColor = 0;
+	public double escapeDistance = 1; // Default escape distance
 
 	public void createPanel() {
 
 		fp = new FractalPanel();
 		frame = new JFrame("Fractal Panel");
 		panel = new JPanel();
-		menuBar = new JMenuBar();
+		menuBar = new JMenuBar(); 
 
 		JMenu file = new JMenu("File");
 		JMenu fractal = new JMenu("Fractal");
@@ -105,14 +106,40 @@ public class UI {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
+		
+		// Sets Mandelbrot to be the default fractal
+		updateFractalPanel(1);
 	}
-	
-	public double escapeDistance = 1; // Default escape distance
 	
 	public class escapeDistanceHandler implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			JOptionPane.showInputDialog(frame, "Enter Escape Distance", escapeDistance);
+			String ed = "0";
+			ed = JOptionPane.showInputDialog(frame, "Enter a number greater than 0");
+			boolean done = false;
+			while (done) {
+				try { 
+					while (Double.parseDouble(ed) <= 0) {
+						ed = JOptionPane.showInputDialog(frame, "Invalid Escape Distance");
+					}
+					done = true;
+				}
+				catch (NumberFormatException InvalidFormat) {
+					ed = JOptionPane.showInputDialog(frame, "Invalid Escape Distance");
+				}
+				catch (NullPointerException EmptyString) {
+					ed = JOptionPane.showInputDialog(frame, "Invalid Escape Distance");
+				}
+			}
+			escapeDistance = Double.parseDouble(ed);
+			updateFractalPanel(currentFractal);
+		}
+	}
+	
+	public class exitHandler implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			System.exit(0);
 		}
 	}
 
@@ -168,13 +195,6 @@ public class UI {
 			IndexColorModel icm = ColorModelFactory.createGrayColorModel(255);
 			fp.setIndexColorModel(icm);
 			updateColor(3);
-		}
-	}
-
-	public class exitHandler implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			System.exit(0);
 		}
 	}
 

@@ -1,1 +1,3 @@
-In the top menu bar, File -> Escape Distance... will allow the user to open up a dialogue box. Decimals are allowed. 0 distance or any distance less than zero will automatically be rejected by the program.
+1. File -> Escape Distance...
+2. The user will be prompted to enter in a number greater than 0. 
+		Numbers less than 0, anything that is not a number (e.g characters, symbols, ect.), or an empty input will be rejected by the program, and the user will be prompted to enter in a new value.

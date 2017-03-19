@@ -52,4 +52,4 @@ public class BurningShip {
 		} 
 		return grid; 
 	}
-}
+} 
