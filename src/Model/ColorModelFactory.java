@@ -84,4 +84,4 @@ public class ColorModelFactory {
     IndexColorModel retVal = new IndexColorModel(8, reds.length, reds, greens, blues);
     return retVal;
   }
-}
+} 

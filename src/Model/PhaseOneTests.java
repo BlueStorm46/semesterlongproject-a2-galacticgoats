@@ -138,4 +138,4 @@ public class PhaseOneTests {
 		assertEquals(512, mu.createMulti(2)[0].length, 0);
 		assertEquals(512, mu.createMulti(2).length, 0);
 	}
-} 
+}

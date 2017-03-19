@@ -33,4 +33,4 @@ public class PhaseTwoTests {
 		Multibrot mu = new Multibrot();
 	    assertEquals(10, mu.escapeTime(0.7025440313111545, -0.5520547945205528, 3), 0.001);
 	  }
-}
+} 

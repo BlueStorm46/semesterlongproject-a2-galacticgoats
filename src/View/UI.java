@@ -301,7 +301,6 @@ public class UI {
 				fp.setIndexColorModel(ColorModelFactory.createRainbowColorModel(255));
 				fp.updateImage(mu.createMulti(escapeDistance));
 			}
-
 		}
 	}
 }

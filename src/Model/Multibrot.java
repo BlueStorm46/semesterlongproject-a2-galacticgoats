@@ -52,4 +52,4 @@ public class Multibrot {
 		} 
 		return grid; 
 	}
-} 
+}

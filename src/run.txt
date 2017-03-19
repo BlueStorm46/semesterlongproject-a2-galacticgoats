@@ -1,1 +1,1 @@
-The Main.java class contains the main() method, which will call the GUI method. Right clicking Main.java -> Run As... -> Java Application will run the GUI. 
+The Main.java class contains the main() method, which will call the GUI method. Right clicking Main.java -> Run As... -> Java Application will run the GUI.
