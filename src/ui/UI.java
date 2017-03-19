@@ -1,4 +1,4 @@
-package View;
+package ui;
 
 import java.awt.FlowLayout;
 
@@ -14,11 +14,11 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import Model.BurningShip;
-import Model.ColorModelFactory;
-import Model.Julia;
-import Model.Mandelbrot;
-import Model.Multibrot;
+import model.BurningShip;
+import model.ColorModelFactory;
+import model.Julia;
+import model.Mandelbrot;
+import model.Multibrot;
 import edu.buffalo.fractal.FractalPanel;
 
 public class UI {

@@ -1,6 +1,6 @@
-package Model;
+package model;
 
-import View.UI;
+import ui.UI;
 
 public class Main {
 	public static void main(String[] args) {

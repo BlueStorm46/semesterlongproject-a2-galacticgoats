@@ -1,8 +1,12 @@
-package Model;
+package tests;
 
 import static org.junit.Assert.assertEquals;
-
 import org.junit.Test;
+
+import model.Mandelbrot;
+import model.Julia;
+import model.BurningShip;
+import model.Multibrot;
 
 public class PhaseTwoTests {
 

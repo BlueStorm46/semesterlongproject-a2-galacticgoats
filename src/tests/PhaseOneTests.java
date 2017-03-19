@@ -1,7 +1,12 @@
-package Model;
+package tests;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
+
+import model.Mandelbrot;
+import model.Julia;
+import model.BurningShip;
+import model.Multibrot;
 
 /**	o Translate a pixel's row to the associated x-coordinate in the fractal (1 test per fractal) [4 * 5 points = 20 points]
 	o Translate a pixel's column to the associated y-coordinate in the fractal (1 test per fractal) [4 * 5 points = 20 points]
