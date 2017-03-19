@@ -1,0 +1,1 @@
+In the top menu bar, File -> Escape Distance... will allow the user to open up a dialogue box. Decimals are allowed. 0 distance or any distance less than zero will automatically be rejected by the program.

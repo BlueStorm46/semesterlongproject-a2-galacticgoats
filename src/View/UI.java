@@ -1,35 +1,38 @@
 package View;
 
 import java.awt.FlowLayout;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.IndexColorModel;
 import java.beans.EventHandler;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import Model.BurningShip;
+import Model.ColorModelFactory;
 import Model.Julia;
 import Model.Mandelbrot;
-import Model.Model;
 import Model.Multibrot;
 import edu.buffalo.fractal.FractalPanel;
 
 public class UI {
 
 	public UI() {
-
 		createPanel();
-
 	}
 
 	FractalPanel fp;
 	JFrame frame;
 	JMenuBar menuBar;
 	JPanel panel;
+	int currentFractal = 0;
+	private int currentColor = 0;
 
 	public void createPanel() {
 
@@ -67,28 +70,35 @@ public class UI {
 		ActionListener mu = new MultibrotHandler();
 		multibrot.addActionListener(mu);
 
-		// Adding colors schemes to Color Menu bar
-		JMenuItem red = new JMenuItem("Red");
-		JMenuItem green = new JMenuItem("Green");
 		JMenuItem blue = new JMenuItem("Blue");
-		JMenuItem black = new JMenuItem("Black");
+		JMenuItem gray = new JMenuItem("Gray");
+		JMenuItem rainbow = new JMenuItem("Rainbow");
 
-		color.add(red);
-		color.add(green);
 		color.add(blue);
-		color.add(black);
+		color.add(gray);
+		color.add(rainbow);
 
 		// Adding ActionListeners to color options
-		// red.addActionListener();
-		// green.addActionListener();
-		// blue.addActionListener();
-		// black.addActionListener();
+		ActionListener bh = new blueHandler();
+		blue.addActionListener(bh);
+		ActionListener gh = new grayHandler();
+		gray.addActionListener(gh);
+		ActionListener rh = new rainbowHandler();
+		rainbow.addActionListener(rh);
 
 		// Adding Exit and change escape distance option to Menu bar
 		JMenuItem exit = new JMenuItem("Exit");
-		JMenuItem ced = new JMenuItem("Edit Escape Distance");
+		JMenuItem ced = new JMenuItem("Escape Distance...");
 		file.add(ced);
 		file.add(exit);
+
+		// Adding ActionListeners to escapeDistance
+		ActionListener ed = new escapeDistanceHandler();
+		ced.addActionListener(ed);
+		
+		// Adding ActionListeners to exit
+		ActionListener eh = new exitHandler();
+		exit.addActionListener(eh);
 
 		frame.setJMenuBar(menuBar);
 		frame.setSize(512, 512);
@@ -96,61 +106,182 @@ public class UI {
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
+	
+	public double escapeDistance = 1; // Default escape distance
+	
+	public class escapeDistanceHandler implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JOptionPane.showInputDialog(frame, "Enter Escape Distance", escapeDistance);
+		}
+	}
 
 	public class MandelbrotEventHandler implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			panel.removeAll();
-			Mandelbrot mb = new Mandelbrot();
-			fp = new FractalPanel();
-			fp.updateImage(mb.createMandel());
-			panel.add(fp);
-			frame.add(panel);
-			frame.pack();
-
+			updateFractalPanel(1);
 		}
 	}
 
 	public class JuliaEventHandler implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			panel.removeAll();
-			Julia j = new Julia();
-			fp = new FractalPanel();
-			fp.updateImage(j.createJulia());
-			panel.add(fp);
-			frame.add(panel);
-			frame.pack();
-
+			updateFractalPanel(2);
 		}
 	}
 
 	public class BurningShipHandler implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			panel.removeAll();
-			BurningShip bs = new BurningShip();
-			fp = new FractalPanel();
-			fp.updateImage(bs.createBS());
-			panel.add(fp);
-			frame.add(panel);
-			frame.pack();
+			updateFractalPanel(3);
 		}
 	}
 
 	public class MultibrotHandler implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			panel.removeAll();
-			Multibrot mu = new Multibrot();
-			fp = new FractalPanel();
-			fp.updateImage(mu.createMulti());
-			panel.add(fp);
-			frame.add(panel);
-			frame.pack();
+			updateFractalPanel(4);
+		}
+	}
 
+	public class blueHandler implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			IndexColorModel icm = ColorModelFactory.createBluesColorModel(255);
+			fp.setIndexColorModel(icm);
+			updateColor(1);
+		}
+	}
+
+	public class grayHandler implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			IndexColorModel icm = ColorModelFactory.createGrayColorModel(255);
+			fp.setIndexColorModel(icm);
+			updateColor(2);
+		}
+	}
+
+	public class rainbowHandler implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			IndexColorModel icm = ColorModelFactory.createGrayColorModel(255);
+			fp.setIndexColorModel(icm);
+			updateColor(3);
+		}
+	}
+
+	public class exitHandler implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			System.exit(0);
+		}
+	}
+
+	public void updateFractalPanel(int num) {
+		panel.removeAll();
+		currentFractal = num;
+		panel.add(fp);
+		frame.add(panel);
+		frame.pack();
+		if (currentFractal == 1) {
+			Mandelbrot mb = new Mandelbrot();
+			fp.updateImage(mb.createMandel(escapeDistance));
+		}
+
+		if (currentFractal == 2) {
+			Julia j = new Julia();
+			fp.updateImage(j.createJulia(escapeDistance));
+		}
+
+		if (currentFractal == 3) {
+			BurningShip bs = new BurningShip();
+			fp.updateImage(bs.createBS(escapeDistance));
+		}
+
+		if (currentFractal == 4) {
+			Multibrot mu = new Multibrot();
+			fp.updateImage(mu.createMulti(escapeDistance));
 		}
 
 	}
 
+	public void updateColor(int n) {
+		currentColor = n;
+		if (n == 1) {
+			if (currentFractal == 1) {
+				Mandelbrot mb = new Mandelbrot();
+				fp.setIndexColorModel(ColorModelFactory.createBluesColorModel(255));
+				fp.updateImage(mb.createMandel(escapeDistance));
+			}
+			if (currentFractal == 2) {
+				Julia j = new Julia();
+				fp.setIndexColorModel(ColorModelFactory.createBluesColorModel(255));
+				fp.updateImage(j.createJulia(escapeDistance));
+			}
+
+			if (currentFractal == 3) {
+				BurningShip bs = new BurningShip();
+				fp.setIndexColorModel(ColorModelFactory.createBluesColorModel(255));
+				fp.updateImage(bs.createBS(escapeDistance));
+			}
+
+			if (currentFractal == 4) {
+				Multibrot mu = new Multibrot();
+				fp.setIndexColorModel(ColorModelFactory.createBluesColorModel(255));
+				fp.updateImage(mu.createMulti(escapeDistance));
+			}
+		}
+
+		if (n == 2) {
+			if (currentFractal == 1) {
+				Mandelbrot mb = new Mandelbrot();
+				fp.setIndexColorModel(ColorModelFactory.createGrayColorModel(255));
+				fp.updateImage(mb.createMandel(escapeDistance));
+			}
+			if (currentFractal == 2) {
+				Julia j = new Julia();
+				fp.setIndexColorModel(ColorModelFactory.createGrayColorModel(255));
+				fp.updateImage(j.createJulia(escapeDistance));
+			}
+
+			if (currentFractal == 3) {
+				BurningShip bs = new BurningShip();
+				fp.setIndexColorModel(ColorModelFactory.createGrayColorModel(255));
+				fp.updateImage(bs.createBS(escapeDistance));
+			}
+
+			if (currentFractal == 4) {
+				Multibrot mu = new Multibrot();
+				fp.setIndexColorModel(ColorModelFactory.createGrayColorModel(255));
+				fp.updateImage(mu.createMulti(escapeDistance));
+			}
+		}
+
+		if (n == 3) {
+			if (currentFractal == 1) {
+				Mandelbrot mb = new Mandelbrot();
+				fp.setIndexColorModel(ColorModelFactory.createRainbowColorModel(255));
+				fp.updateImage(mb.createMandel(escapeDistance));
+			}
+			if (currentFractal == 2) {
+				Julia j = new Julia();
+				fp.setIndexColorModel(ColorModelFactory.createRainbowColorModel(255));
+				fp.updateImage(j.createJulia(escapeDistance));
+			}
+
+			if (currentFractal == 3) {
+				BurningShip bs = new BurningShip();
+				fp.setIndexColorModel(ColorModelFactory.createRainbowColorModel(255));
+				fp.updateImage(bs.createBS(escapeDistance));
+			}
+
+			if (currentFractal == 4) {
+				Multibrot mu = new Multibrot();
+				fp.setIndexColorModel(ColorModelFactory.createRainbowColorModel(255));
+				fp.updateImage(mu.createMulti(escapeDistance));
+			}
+
+		}
+	}
 }

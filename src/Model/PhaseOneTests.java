@@ -22,44 +22,44 @@ public class PhaseOneTests {
 	@Test
 	public void MandelbrotXAxis() {
 		Mandelbrot ma = new Mandelbrot();
-		assertEquals(1, ma.createMandel()[372][0], 0);
+		assertEquals(0, ma.createMandel(2)[372][0], 0);
 	}
 	@Test
 	public void JuliaXAxis() {
 		Julia j = new Julia();
-		assertEquals(1, j.createJulia()[372][0], 0);
+		assertEquals(0, j.createJulia(2)[372][0], 0);
 	}
 	@Test
 	public void BurningShipXAxis() {
 		BurningShip bs = new BurningShip();
-		assertEquals(1, bs.createBS()[372][0], 0);
+		assertEquals(255, bs.createBS(2)[372][0], 0);
 	}
 	@Test
 	public void MultibrotXAxis() {
 		Multibrot mu = new Multibrot();
-		assertEquals(1, mu.createMulti()[372][0], 0);
+		assertEquals(1, mu.createMulti(2)[372][0], 0);
 	}
 	
 	/** Translate a pixel's column to the associated y-coordinate in the fractal (1 test per fractal) */
 	@Test
 	public void MandelbrotYAxis() {
 		Mandelbrot ma = new Mandelbrot();
-		assertEquals(1, ma.createMandel()[0][393], 0);	
+		assertEquals(0, ma.createMandel(2)[0][393], 0);	
 	}
 	@Test
 	public void JuliaYAxis() {
 		Julia j = new Julia();
-		assertEquals(1, j.createJulia()[0][393], 0);
+		assertEquals(1, j.createJulia(2)[0][393], 0);
 	}
 	@Test
 	public void BurningShipYAxis() {
 		BurningShip bs = new BurningShip();
-		assertEquals(255, bs.createBS()[0][393], 0);
+		assertEquals(255, bs.createBS(2)[0][393], 0);
 	}
 	@Test
 	public void MultibrotYAxis() {
 		Multibrot mu = new Multibrot();
-		assertEquals(1, mu.createMulti()[0][393], 0);
+		assertEquals(0, mu.createMulti(2)[0][393], 0);
 	}
 	
 	/** Calculates the escape time for a coordinate whose distance from the origin never exceeds the escape distance */
@@ -117,25 +117,25 @@ public class PhaseOneTests {
 	@Test
 	public void MandelbrotFractalSize() { 
 		Mandelbrot ma = new Mandelbrot();
-		assertEquals(512, ma.createMandel()[0].length, 0);
-		assertEquals(512, ma.createMandel().length, 0);
+		assertEquals(512, ma.createMandel(2)[0].length, 0);
+		assertEquals(512, ma.createMandel(2).length, 0);
 	}
 	@Test
 	public void JuliaFractalSize() {
 		Julia j = new Julia();
-		assertEquals(512, j.createJulia()[0].length, 0);
-		assertEquals(512, j.createJulia().length, 0);
+		assertEquals(512, j.createJulia(2)[0].length, 0);
+		assertEquals(512, j.createJulia(2).length, 0);
 	}
 	@Test
 	public void BurningShipFractalSize() {
 		BurningShip bs = new BurningShip();
-		assertEquals(512, bs.createBS()[0].length, 0);
-		assertEquals(512, bs.createBS().length, 0);
+		assertEquals(512, bs.createBS(2)[0].length, 0);
+		assertEquals(512, bs.createBS(2).length, 0);
 	}
 	@Test
 	public void MultibrotFractalSize() { 
 		Multibrot mu = new Multibrot();
-		assertEquals(512, mu.createMulti()[0].length, 0);
-		assertEquals(512, mu.createMulti().length, 0);
+		assertEquals(512, mu.createMulti(2)[0].length, 0);
+		assertEquals(512, mu.createMulti(2).length, 0);
 	}
 }
