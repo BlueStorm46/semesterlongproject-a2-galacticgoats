@@ -8,7 +8,7 @@ public class Mandelbrot {
 		double xCord = xCalc; // Current point's x-coordinate
 		double yCord = yCalc; // Current point's y-coordinate
 		while (distance <= escapeDistance && passes < 255) {
-			/** x' = x² - y² + current point's x-coordinate
+			/** x' = xï¿½ - yï¿½ + current point's x-coordinate
 				y' = 2 * x * y + current point's y-coordinate
    					Where x and y are the values of xCalc and yCalc prior to this update and x' and y' are their values after the update. */
 			double tempX = xCalc; // x
@@ -32,8 +32,8 @@ public class Mandelbrot {
 		double y_range = (y_max - y_min)/512;
 		
 		/** Current coordinates the for loop is on */
-		double x_current_cord = 0;
-		double y_current_cord = 0;
+		double x_current_cord = x_min;
+		double y_current_cord = y_min;
 		
 		/** Create an empty grid */
 		int[][] grid = new int[512][512];
@@ -48,7 +48,7 @@ public class Mandelbrot {
 				grid[x][y] = (int) escapeTime(x_current_cord, y_current_cord, escapeDistance);
 			}
 			/** Reset y-coordinate pixel */
-			y_current_cord = 0;
+			y_current_cord = y_min;
 		} 
 		return grid; 
 	}	

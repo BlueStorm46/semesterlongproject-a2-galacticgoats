@@ -6,7 +6,7 @@ public class Julia {
 		double distance = Math.sqrt(Math.pow(xCalc, 2) + Math.pow(yCalc, 2));
 		int passes = 0;
 		while (distance <= escapeDistance && passes < 255) {
-			/** x' = x² - y² + -0.72689
+			/** x' = xï¿½ - yï¿½ + -0.72689
 				y' = 2 * x * y + 0.188887
 			   		Where x and y are the values of xCalc and yCalc prior to this update and x' and y' are their values after the update. */
 			double tempX = xCalc; // x
@@ -30,8 +30,8 @@ public class Julia {
 		double y_range = (y_max - y_min)/512;
 		
 		/** Current coordinates the for loop is on */
-		double x_current_cord = 0;
-		double y_current_cord = 0;
+		double x_current_cord = x_min;
+		double y_current_cord = y_min;
 		
 		/** Create an empty grid */
 		int[][] grid = new int[512][512];
@@ -46,7 +46,7 @@ public class Julia {
 				grid[x][y] = (int) escapeTime(x_current_cord, y_current_cord, escapeDistance);
 			}
 			/** Reset y-coordinate pixel */
-			y_current_cord = 0;
+			y_current_cord = y_min;
 		} 
 		return grid; 
 	}

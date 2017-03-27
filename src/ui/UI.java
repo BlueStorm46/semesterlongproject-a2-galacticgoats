@@ -33,7 +33,7 @@ public class UI {
 	JPanel panel;
 	int currentFractal = 0;
 	private int currentColor = 0;
-	public double escapeDistance = 1; // Default escape distance
+	public double escapeDistance = 2; // Default escape distance
 
 	public void createPanel() {
 
