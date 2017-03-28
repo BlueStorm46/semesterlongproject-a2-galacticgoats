@@ -30,9 +30,8 @@ public class UI {
 	JPanel panel;
 	
 	/** Global Variables */
-	int currentFractal = 1;				// Default Fractal: Mandelbrot
-	private int currentColor = 0;		// Default Color: Rainbow
 	public double escapeDistance = 2; 	// Default Escape Distance: 2
+	int currentFractal = 1;				// Default Fractal: Mandelbrot
 
 	public void createPanel() {
 
@@ -104,7 +103,8 @@ public class UI {
 		frame.setVisible(true);
 		
 		/** Draws Default Fractal */
-		updateFractalPanel(currentFractal);
+		updateColor(1);
+		updateFractal(currentFractal);
 	}
 	
 	public class escapeDistanceHandler implements ActionListener {
@@ -124,28 +124,28 @@ public class UI {
 	public class MandelbrotEventHandler implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			updateFractalPanel(1);
+			updateFractal(1);
 		}
 	}
 
 	public class JuliaEventHandler implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			updateFractalPanel(2);
+			updateFractal(2);
 		}
 	}
 
 	public class BurningShipHandler implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			updateFractalPanel(3);
+			updateFractal(3);
 		}
 	}
 
 	public class MultibrotHandler implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			updateFractalPanel(4);
+			updateFractal(4);
 		}
 	}
 
@@ -176,29 +176,26 @@ public class UI {
 		}
 	}
 
+	/** The user inputs a value that is stored as a string. The string is then converted into a double using parseDouble.
+	 * 	If the user enters anything that isn't a number, a NumberFormatException is thrown, and the user will be asked to input a new value.
+	 * 	This will continue until the user enters a valid number, or clicks the "Cancel" button.
+	 */
 	public void updateEscapeDistance() {
 		String ed = "0";
-		ed = JOptionPane.showInputDialog(frame, "Enter a number greater than 0");
-		boolean done = false;
-		while (done) {
-			try { 
-				while (Double.parseDouble(ed) <= 0) {
-					ed = JOptionPane.showInputDialog(frame, "Invalid Escape Distance");
-				}
-				done = true;
-			}
-			catch (NumberFormatException InvalidFormat) {
-				ed = JOptionPane.showInputDialog(frame, "Invalid Escape Distance");
-			}
-			catch (NullPointerException EmptyString) {
-				ed = JOptionPane.showInputDialog(frame, "Invalid Escape Distance");
-			}
+		ed = JOptionPane.showInputDialog(frame, "Default: 2.0\n\nEnter number greater than 0:");
+		try { 
+			escapeDistance = Double.parseDouble(ed);
 		}
-		escapeDistance = Double.parseDouble(ed);
-		updateFractalPanel(currentFractal);
+		catch (NumberFormatException InvalidFormat) {
+			updateEscapeDistance();
+		}
+		catch (NullPointerException EmptyString) {
+			/** Assume user hit the "Cancel" button and do nothing. */
+		}
+		updateFractal(currentFractal);
 	}
 
-	public void updateFractalPanel(int num) {
+	public void updateFractal(int num) {
 		panel.removeAll();
 		currentFractal = num;
 		panel.add(fp);
@@ -227,7 +224,6 @@ public class UI {
 	}
 
 	public void updateColor(int n) {
-		currentColor = n;
 		if (n == 1) {
 			if (currentFractal == 1) {
 				Mandelbrot mb = new Mandelbrot();
