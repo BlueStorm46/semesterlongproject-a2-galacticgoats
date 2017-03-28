@@ -103,8 +103,8 @@ public class UI {
 		frame.setVisible(true);
 		
 		/** Draws Default Fractal */
-		updateColor(1);
-		updateFractal(currentFractal);
+//		updateColor(1);
+//		updateFractal(currentFractal);
 	}
 	
 	public class escapeDistanceHandler implements ActionListener {
