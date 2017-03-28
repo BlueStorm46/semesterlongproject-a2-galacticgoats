@@ -1,4 +1,4 @@
-package model;
+package code.fractals;
 
 public class Multibrot {
 
@@ -32,8 +32,8 @@ public class Multibrot {
 		double y_range = (y_max - y_min)/512;
 		
 		/** Current coordinates the for loop is on */
-		double x_current_cord = 0;
-		double y_current_cord = 0;
+		double x_current_cord = x_min;
+		double y_current_cord = y_min;
 		
 		/** Create an empty grid */
 		int[][] grid = new int[512][512];
@@ -48,7 +48,7 @@ public class Multibrot {
 				grid[x][y] = (int) escapeTime(x_current_cord, y_current_cord, escapeDistance);
 			}
 			/** Reset y-coordinate pixel */
-			y_current_cord = 0;
+			y_current_cord = y_min;
 		} 
 		return grid; 
 	}

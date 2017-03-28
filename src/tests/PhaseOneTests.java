@@ -2,11 +2,7 @@ package tests;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
-
-import model.Mandelbrot;
-import model.Julia;
-import model.BurningShip;
-import model.Multibrot;
+import code.fractals.*;
 
 /**	o Translate a pixel's row to the associated x-coordinate in the fractal (1 test per fractal) [4 * 5 points = 20 points]
 	o Translate a pixel's column to the associated y-coordinate in the fractal (1 test per fractal) [4 * 5 points = 20 points]
@@ -27,22 +23,22 @@ public class PhaseOneTests {
 	@Test
 	public void MandelbrotXAxis() {
 		Mandelbrot ma = new Mandelbrot();
-		assertEquals(0, ma.createMandel(2)[372][0], 0);
+		assertEquals(1, ma.createMandel(2)[372][0], 0);
 	}
 	@Test
 	public void JuliaXAxis() {
 		Julia j = new Julia();
-		assertEquals(0, j.createJulia(2)[372][0], 0);
+		assertEquals(2, j.createJulia(2)[372][0], 0);
 	}
 	@Test
 	public void BurningShipXAxis() {
 		BurningShip bs = new BurningShip();
-		assertEquals(255, bs.createBS(2)[372][0], 0);
+		assertEquals(7, bs.createBS(2)[372][0], 0);
 	}
 	@Test
 	public void MultibrotXAxis() {
 		Multibrot mu = new Multibrot();
-		assertEquals(1, mu.createMulti(2)[372][0], 0);
+		assertEquals(2, mu.createMulti(2)[372][0], 0);
 	}
 	
 	/** Translate a pixel's column to the associated y-coordinate in the fractal (1 test per fractal) */
@@ -59,12 +55,12 @@ public class PhaseOneTests {
 	@Test
 	public void BurningShipYAxis() {
 		BurningShip bs = new BurningShip();
-		assertEquals(255, bs.createBS(2)[0][393], 0);
+		assertEquals(12, bs.createBS(2)[0][393], 0);
 	}
 	@Test
 	public void MultibrotYAxis() {
 		Multibrot mu = new Multibrot();
-		assertEquals(0, mu.createMulti(2)[0][393], 0);
+		assertEquals(1, mu.createMulti(2)[0][393], 0);
 	}
 	
 	/** Calculates the escape time for a coordinate whose distance from the origin never exceeds the escape distance */

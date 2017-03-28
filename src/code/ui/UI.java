@@ -1,4 +1,4 @@
-package ui;
+package code.ui;
 
 import java.awt.FlowLayout;
 
@@ -14,11 +14,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import model.BurningShip;
-import model.ColorModelFactory;
-import model.Julia;
-import model.Mandelbrot;
-import model.Multibrot;
+import code.fractals.*;
 import edu.buffalo.fractal.FractalPanel;
 
 public class UI {
@@ -27,41 +23,55 @@ public class UI {
 		createPanel();
 	}
 
+	/** Instance Variables */
 	FractalPanel fp;
 	JFrame frame;
 	JMenuBar menuBar;
 	JPanel panel;
-	int currentFractal = 0;
-	private int currentColor = 0;
-	public double escapeDistance = 2; // Default escape distance
+	
+	/** Global Variables */
+	int currentFractal = 1;				// Default Fractal: Mandelbrot
+	private int currentColor = 0;		// Default Color: Rainbow
+	public double escapeDistance = 2; 	// Default Escape Distance: 2
 
 	public void createPanel() {
 
+		/** JFrame Skeleton */
 		fp = new FractalPanel();
 		frame = new JFrame("Fractal Panel");
 		panel = new JPanel();
 		menuBar = new JMenuBar(); 
 
+		/** Menubar Menus */
 		JMenu file = new JMenu("File");
 		JMenu fractal = new JMenu("Fractal");
 		JMenu color = new JMenu("Color");
-
 		menuBar.add(file);
 		menuBar.add(fractal);
 		menuBar.add(color);
+		
+		/** Escape Distance & Exit Menu */
+		JMenuItem ced = new JMenuItem("Escape Distance...");
+		JMenuItem exit = new JMenuItem("Quit");
+		file.add(ced);
+		file.add(exit);
+		/** Escape Distance ActionListener */
+		ActionListener ed = new escapeDistanceHandler();
+		ced.addActionListener(ed);
+		/** Quit ActionListener */
+		ActionListener eh = new exitHandler();
+		exit.addActionListener(eh);
 
-		// Adding fractal options to Fractal Menu bar
+		/** Fractal Menu Buttons */
 		JMenuItem mandelbrot = new JMenuItem("Mandelbrot");
 		JMenuItem julia = new JMenuItem("Julia");
 		JMenuItem burningShip = new JMenuItem("Burning Ship");
 		JMenuItem multibrot = new JMenuItem("Multibrot");
-
 		fractal.add(mandelbrot);
 		fractal.add(julia);
 		fractal.add(burningShip);
 		fractal.add(multibrot);
-
-		// Adding ActionListerners to fractal options
+		/** Fractal Menu ActionListerners */
 		ActionListener mb = new MandelbrotEventHandler();
 		mandelbrot.addActionListener(mb);
 		ActionListener j = new JuliaEventHandler();
@@ -71,68 +81,36 @@ public class UI {
 		ActionListener mu = new MultibrotHandler();
 		multibrot.addActionListener(mu);
 
+		/** Color Menu Buttons */
+		JMenuItem rainbow = new JMenuItem("Rainbow");
 		JMenuItem blue = new JMenuItem("Blue");
 		JMenuItem gray = new JMenuItem("Gray");
-		JMenuItem rainbow = new JMenuItem("Rainbow");
-
+		color.add(rainbow);
 		color.add(blue);
 		color.add(gray);
-		color.add(rainbow);
-
-		// Adding ActionListeners to color options
+		/** Color Menu ActionListerners */
+		ActionListener rh = new rainbowHandler();
+		rainbow.addActionListener(rh);
 		ActionListener bh = new blueHandler();
 		blue.addActionListener(bh);
 		ActionListener gh = new grayHandler();
 		gray.addActionListener(gh);
-		ActionListener rh = new rainbowHandler();
-		rainbow.addActionListener(rh);
 
-		// Adding Exit and change escape distance option to Menu bar
-		JMenuItem exit = new JMenuItem("Exit");
-		JMenuItem ced = new JMenuItem("Escape Distance...");
-		file.add(ced);
-		file.add(exit);
-
-		// Adding ActionListeners to escapeDistance
-		ActionListener ed = new escapeDistanceHandler();
-		ced.addActionListener(ed);
-		
-		// Adding ActionListeners to exit
-		ActionListener eh = new exitHandler();
-		exit.addActionListener(eh);
-
+		/** Finish Creating GUI */
 		frame.setJMenuBar(menuBar);
 		frame.setSize(512, 512);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		
-		// Sets Mandelbrot to be the default fractal
-		updateFractalPanel(1);
+		/** Draws Default Fractal */
+		updateFractalPanel(currentFractal);
 	}
 	
 	public class escapeDistanceHandler implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			String ed = "0";
-			ed = JOptionPane.showInputDialog(frame, "Enter a number greater than 0");
-			boolean done = false;
-			while (done) {
-				try { 
-					while (Double.parseDouble(ed) <= 0) {
-						ed = JOptionPane.showInputDialog(frame, "Invalid Escape Distance");
-					}
-					done = true;
-				}
-				catch (NumberFormatException InvalidFormat) {
-					ed = JOptionPane.showInputDialog(frame, "Invalid Escape Distance");
-				}
-				catch (NullPointerException EmptyString) {
-					ed = JOptionPane.showInputDialog(frame, "Invalid Escape Distance");
-				}
-			}
-			escapeDistance = Double.parseDouble(ed);
-			updateFractalPanel(currentFractal);
+			updateEscapeDistance();
 		}
 	}
 	
@@ -171,12 +149,21 @@ public class UI {
 		}
 	}
 
+	public class rainbowHandler implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			IndexColorModel icm = ColorModelFactory.createGrayColorModel(255);
+			fp.setIndexColorModel(icm);
+			updateColor(1);
+		}
+	}
+	
 	public class blueHandler implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			IndexColorModel icm = ColorModelFactory.createBluesColorModel(255);
 			fp.setIndexColorModel(icm);
-			updateColor(1);
+			updateColor(2);
 		}
 	}
 
@@ -185,17 +172,30 @@ public class UI {
 		public void actionPerformed(ActionEvent e) {
 			IndexColorModel icm = ColorModelFactory.createGrayColorModel(255);
 			fp.setIndexColorModel(icm);
-			updateColor(2);
+			updateColor(3);
 		}
 	}
 
-	public class rainbowHandler implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			IndexColorModel icm = ColorModelFactory.createGrayColorModel(255);
-			fp.setIndexColorModel(icm);
-			updateColor(3);
+	public void updateEscapeDistance() {
+		String ed = "0";
+		ed = JOptionPane.showInputDialog(frame, "Enter a number greater than 0");
+		boolean done = false;
+		while (done) {
+			try { 
+				while (Double.parseDouble(ed) <= 0) {
+					ed = JOptionPane.showInputDialog(frame, "Invalid Escape Distance");
+				}
+				done = true;
+			}
+			catch (NumberFormatException InvalidFormat) {
+				ed = JOptionPane.showInputDialog(frame, "Invalid Escape Distance");
+			}
+			catch (NullPointerException EmptyString) {
+				ed = JOptionPane.showInputDialog(frame, "Invalid Escape Distance");
+			}
 		}
+		escapeDistance = Double.parseDouble(ed);
+		updateFractalPanel(currentFractal);
 	}
 
 	public void updateFractalPanel(int num) {
@@ -231,74 +231,72 @@ public class UI {
 		if (n == 1) {
 			if (currentFractal == 1) {
 				Mandelbrot mb = new Mandelbrot();
-				fp.setIndexColorModel(ColorModelFactory.createBluesColorModel(255));
+				fp.setIndexColorModel(ColorModelFactory.createRainbowColorModel(255));
 				fp.updateImage(mb.createMandel(escapeDistance));
 			}
 			if (currentFractal == 2) {
 				Julia j = new Julia();
-				fp.setIndexColorModel(ColorModelFactory.createBluesColorModel(255));
+				fp.setIndexColorModel(ColorModelFactory.createRainbowColorModel(255));
 				fp.updateImage(j.createJulia(escapeDistance));
 			}
 
 			if (currentFractal == 3) {
 				BurningShip bs = new BurningShip();
-				fp.setIndexColorModel(ColorModelFactory.createBluesColorModel(255));
+				fp.setIndexColorModel(ColorModelFactory.createRainbowColorModel(255));
 				fp.updateImage(bs.createBS(escapeDistance));
 			}
 
 			if (currentFractal == 4) {
 				Multibrot mu = new Multibrot();
-				fp.setIndexColorModel(ColorModelFactory.createBluesColorModel(255));
+				fp.setIndexColorModel(ColorModelFactory.createRainbowColorModel(255));
 				fp.updateImage(mu.createMulti(escapeDistance));
 			}
 		}
-
 		if (n == 2) {
 			if (currentFractal == 1) {
 				Mandelbrot mb = new Mandelbrot();
-				fp.setIndexColorModel(ColorModelFactory.createGrayColorModel(255));
+				fp.setIndexColorModel(ColorModelFactory.createBluesColorModel(255));
 				fp.updateImage(mb.createMandel(escapeDistance));
 			}
 			if (currentFractal == 2) {
 				Julia j = new Julia();
-				fp.setIndexColorModel(ColorModelFactory.createGrayColorModel(255));
+				fp.setIndexColorModel(ColorModelFactory.createBluesColorModel(255));
 				fp.updateImage(j.createJulia(escapeDistance));
 			}
 
 			if (currentFractal == 3) {
 				BurningShip bs = new BurningShip();
-				fp.setIndexColorModel(ColorModelFactory.createGrayColorModel(255));
+				fp.setIndexColorModel(ColorModelFactory.createBluesColorModel(255));
 				fp.updateImage(bs.createBS(escapeDistance));
 			}
 
 			if (currentFractal == 4) {
 				Multibrot mu = new Multibrot();
-				fp.setIndexColorModel(ColorModelFactory.createGrayColorModel(255));
+				fp.setIndexColorModel(ColorModelFactory.createBluesColorModel(255));
 				fp.updateImage(mu.createMulti(escapeDistance));
 			}
 		}
-
 		if (n == 3) {
 			if (currentFractal == 1) {
 				Mandelbrot mb = new Mandelbrot();
-				fp.setIndexColorModel(ColorModelFactory.createRainbowColorModel(255));
+				fp.setIndexColorModel(ColorModelFactory.createGrayColorModel(255));
 				fp.updateImage(mb.createMandel(escapeDistance));
 			}
 			if (currentFractal == 2) {
 				Julia j = new Julia();
-				fp.setIndexColorModel(ColorModelFactory.createRainbowColorModel(255));
+				fp.setIndexColorModel(ColorModelFactory.createGrayColorModel(255));
 				fp.updateImage(j.createJulia(escapeDistance));
 			}
 
 			if (currentFractal == 3) {
 				BurningShip bs = new BurningShip();
-				fp.setIndexColorModel(ColorModelFactory.createRainbowColorModel(255));
+				fp.setIndexColorModel(ColorModelFactory.createGrayColorModel(255));
 				fp.updateImage(bs.createBS(escapeDistance));
 			}
 
 			if (currentFractal == 4) {
 				Multibrot mu = new Multibrot();
-				fp.setIndexColorModel(ColorModelFactory.createRainbowColorModel(255));
+				fp.setIndexColorModel(ColorModelFactory.createGrayColorModel(255));
 				fp.updateImage(mu.createMulti(escapeDistance));
 			}
 		}

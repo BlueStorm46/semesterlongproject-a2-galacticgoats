@@ -1,1 +1,2 @@
-The Main.java class contains the main() method, which will call the GUI method. Right clicking Main.java -> Run As... -> Java Application will run the GUI.
+1. Within Eclipse, navigate to \semesterlongproject-a2-galacticgoats\src
+2. The file Driver.java contains the main() method. Right-clicking and running this file will start the program.

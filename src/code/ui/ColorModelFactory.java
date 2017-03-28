@@ -1,4 +1,4 @@
-package model;
+package code.ui;
 
 import java.awt.Color;
 import java.awt.image.IndexColorModel;

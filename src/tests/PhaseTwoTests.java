@@ -2,20 +2,16 @@ package tests;
 
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
-
-import model.Mandelbrot;
-import model.Julia;
-import model.BurningShip;
-import model.Multibrot;
+import code.fractals.*;
 
 public class PhaseTwoTests {
 
 	/** o JUnit tests from phase #1 have been updated (where this is needed) so they continue to pass [26 points]
 		o When the escape distance is set to 3, calculates the escape time for a coordinate whose distance from the origin exceeds the escape distance after 10 passes of the loop [4 * 6 points = 24 points]
-			Mandelbrot Set: (0.46007827788650374, -0.3383561643835661)
-			Julia Set: 1.4538160469667272, -0.13502935420743645)
-			Burning Ship Set: (-1.6999999999999802, 0.0030136986301371603)
-			Multibrot Set: (0.7025440313111545, -0.5520547945205528) */
+			- Mandelbrot Set: (0.46007827788650374, -0.3383561643835661)
+			- Julia Set: 1.4538160469667272, -0.13502935420743645)
+			- Burning Ship Set: (-1.6999999999999802, 0.0030136986301371603)
+			- Multibrot Set: (0.7025440313111545, -0.5520547945205528) */
 	
 	@Test
 	  public final void MandelbrotTenLoopPasses() {

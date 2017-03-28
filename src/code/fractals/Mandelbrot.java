@@ -1,4 +1,4 @@
-package model;
+package code.fractals;
 
 public class Mandelbrot {
 

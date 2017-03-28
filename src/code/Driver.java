@@ -1,8 +1,8 @@
-package model;
+package code;
 
-import ui.UI;
+import code.ui.UI;
 
-public class Main {
+public class Driver {
 	public static void main(String[] args) {
 		new UI();
 	}
