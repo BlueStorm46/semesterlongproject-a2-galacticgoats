@@ -178,13 +178,20 @@ public class UI {
 
 	/** The user inputs a value that is stored as a string. The string is then converted into a double using parseDouble.
 	 * 	If the user enters anything that isn't a number, a NumberFormatException is thrown, and the user will be asked to input a new value.
+	 * 	If the user enters a number less than or equal to zero, it is rejected, and the user is asked to input once more.
 	 * 	This will continue until the user enters a valid number, or clicks the "Cancel" button.
 	 */
 	public void updateEscapeDistance() {
 		String ed = "0";
 		ed = JOptionPane.showInputDialog(frame, "Default: 2.0\n\nEnter number greater than 0:");
 		try { 
-			escapeDistance = Double.parseDouble(ed);
+			if (Double.parseDouble(ed) > 0) {
+				escapeDistance = Double.parseDouble(ed);
+			}
+			else {
+				updateEscapeDistance();
+			}
+			
 		}
 		catch (NumberFormatException InvalidFormat) {
 			updateEscapeDistance();
