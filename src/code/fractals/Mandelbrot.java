@@ -2,12 +2,12 @@ package code.fractals;
 
 public class Mandelbrot {
 
-	public double escapeTime(double xCalc, double yCalc, double escapeDistance) {
+	public double escapeTime(double xCalc, double yCalc, double escapeDistance, int escapeTime) {
 		double distance = Math.sqrt(Math.pow(xCalc, 2) + Math.pow(yCalc, 2));
 		int passes = 0;
 		double xCord = xCalc; // Current point's x-coordinate
 		double yCord = yCalc; // Current point's y-coordinate
-		while (distance <= escapeDistance && passes < 255) {
+		while (distance <= escapeDistance && passes < escapeTime) {
 			/** x' = x� - y� + current point's x-coordinate
 				y' = 2 * x * y + current point's y-coordinate
    					Where x and y are the values of xCalc and yCalc prior to this update and x' and y' are their values after the update. */
@@ -21,7 +21,7 @@ public class Mandelbrot {
 		return passes;
 	}
 
-	public int[][] createMandel(double escapeDistance) { 
+	public int[][] createMandel(double escapeDistance, int escapeTime) { 
 		/** X-coordinate range from -2.15 to 0.6
 			Y-coordinate range from -1.3 to 1.3 */
 		double x_min = -2.15, x_max = 0.6;
@@ -45,7 +45,7 @@ public class Mandelbrot {
 			x_current_cord = x_current_cord + x_range;
 			for (int y = 0; y < 512; y++) {
 				y_current_cord = y_current_cord + y_range;
-				grid[x][y] = (int) escapeTime(x_current_cord, y_current_cord, escapeDistance);
+				grid[x][y] = (int) escapeTime(x_current_cord, y_current_cord, escapeDistance, escapeTime);
 			}
 			/** Reset y-coordinate pixel */
 			y_current_cord = y_min;

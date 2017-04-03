@@ -2,13 +2,13 @@ package code.fractals;
 
 public class BurningShip {
 
-	public double escapeTime(double xCalc, double yCalc, double escapeDistance) {
+	public double escapeTime(double xCalc, double yCalc, double escapeDistance, int escapeTime) {
 		double distance = Math.sqrt(Math.pow(xCalc, 2) + Math.pow(yCalc, 2));
 		int passes = 0;
 		double xCord = xCalc; // Current point's x-coordinate
 		double yCord = yCalc; // Current point's y-coordinate
-		while (distance <= escapeDistance && passes < 255) {
-			/** x' = x² - y² + current point's x-coordinate
+		while (distance <= escapeDistance && passes < escapeTime) {
+			/** x' = xï¿½ - yï¿½ + current point's x-coordinate
 				y' = Math.abs(2 * x * y) + current point's y-coordinate
 			   		Where x and y are the values of xCalc and yCalc prior to this update and x' and y' are their values after the update. */
 			double tempX = xCalc; // x
@@ -21,7 +21,7 @@ public class BurningShip {
 		return passes;
 	}
 
-	public int[][] createBS(double escapeDistance) {
+	public int[][] createBS(double escapeDistance, int escapeTime) {
 		/** X-coordinate range from -1.8 to -1.7
 			Y-coordinate range from -0.08 to 0.025 */
 		double x_min = -1.8, x_max = -1.7;
@@ -45,7 +45,7 @@ public class BurningShip {
 			x_current_cord = x_current_cord + x_range;
 			for (int y = 0; y < 512; y++) {
 				y_current_cord = y_current_cord + y_range;
-				grid[x][y] = (int) escapeTime(x_current_cord, y_current_cord, escapeDistance);
+				grid[x][y] = (int) escapeTime(x_current_cord, y_current_cord, escapeDistance, escapeTime);
 			}
 			/** Reset y-coordinate pixel */
 			y_current_cord = y_min;

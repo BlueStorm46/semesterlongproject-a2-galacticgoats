@@ -2,10 +2,10 @@ package code.fractals;
 
 public class Julia {
 
-	public double escapeTime(double xCalc, double yCalc, double escapeDistance) {
+	public double escapeTime(double xCalc, double yCalc, double escapeDistance, int escapeTime) {
 		double distance = Math.sqrt(Math.pow(xCalc, 2) + Math.pow(yCalc, 2));
 		int passes = 0;
-		while (distance <= escapeDistance && passes < 255) {
+		while (distance <= escapeDistance && passes < escapeTime) {
 			/** x' = x� - y� + -0.72689
 				y' = 2 * x * y + 0.188887
 			   		Where x and y are the values of xCalc and yCalc prior to this update and x' and y' are their values after the update. */
@@ -19,7 +19,7 @@ public class Julia {
 		return passes;
 	}
 
-	public int[][] createJulia(double escapeDistance) {
+	public int[][] createJulia(double escapeDistance, int escapeTime) {
 		/** X-coordinate range from -1.7 to 1.7
 		Y-coordinate range from -1.0 to 1.0 */
 		double x_min = -1.7, x_max = 1.7;
@@ -43,7 +43,7 @@ public class Julia {
 			x_current_cord = x_current_cord + x_range;
 			for (int y = 0; y < 512; y++) {
 				y_current_cord = y_current_cord + y_range;
-				grid[x][y] = (int) escapeTime(x_current_cord, y_current_cord, escapeDistance);
+				grid[x][y] = (int) escapeTime(x_current_cord, y_current_cord, escapeDistance, escapeTime);
 			}
 			/** Reset y-coordinate pixel */
 			y_current_cord = y_min;

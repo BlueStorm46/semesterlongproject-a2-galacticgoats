@@ -2,14 +2,14 @@ package code.fractals;
 
 public class Multibrot {
 
-	public int escapeTime(double xCalc, double yCalc, double escapeDistance) {
+	public int escapeTime(double xCalc, double yCalc, double escapeDistance, int escapeTime) {
 		double distance = Math.sqrt(Math.pow(xCalc, 2) + Math.pow(yCalc, 2));
 		int passes = 0;
 		double xCord = xCalc; // Current point's x-coordinate
 		double yCord = yCalc; // Current point's y-coordinate
-		while (distance <= escapeDistance && passes < 255) {
-			/** x' = x³ - (3 * x * y²) + current point's x-coordinate
-				y' = (3 * x² * y) - y³ + current point's y-coordinate
+		while (distance <= escapeDistance && passes < escapeTime) {
+			/** x' = xï¿½ - (3 * x * yï¿½) + current point's x-coordinate
+				y' = (3 * xï¿½ * y) - yï¿½ + current point's y-coordinate
 			  		Where x and y are the values of xCalc and yCalc prior to this update and x' and y' are their values after the update. */
 			double tempX = xCalc; // x
 			double tempY = yCalc; // y
@@ -21,7 +21,7 @@ public class Multibrot {
 		return passes;
 	}
 
-	public int[][] createMulti(double escapeDistance) {
+	public int[][] createMulti(double escapeDistance, int escapeTime) {
 		/** X-coordinate range from -1 to 1
 			Y-coordinate range from -1.3 to 1.3 */
 		double x_min = -1, x_max = 1;
@@ -45,7 +45,7 @@ public class Multibrot {
 			x_current_cord = x_current_cord + x_range;
 			for (int y = 0; y < 512; y++) {
 				y_current_cord = y_current_cord + y_range;
-				grid[x][y] = (int) escapeTime(x_current_cord, y_current_cord, escapeDistance);
+				grid[x][y] = (int) escapeTime(x_current_cord, y_current_cord, escapeDistance, escapeTime);
 			}
 			/** Reset y-coordinate pixel */
 			y_current_cord = y_min;

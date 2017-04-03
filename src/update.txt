@@ -1,4 +1,16 @@
+Escape Distance:
 1. File -> Escape Distance...
-2. The user will be prompted to enter in a number greater than 0. 
-		Numbers less than 0, anything that is not a number (e.g characters, symbols, ect.), or an empty input will be rejected by the program, and the user will be prompted to enter in a new value.
-		
+2. The user will be prompted to enter in a number greater than 0.
+		Rejected inputs:
+		- Numbers less than 0
+		- Empty input
+		- Anything that is not a number (e.g characters, symbols, ect.)
+
+Escape Time:
+1. File -> Escape Time...
+2. The user will be prompted to enter in an integer greater than 0.
+		Rejected Inputs:
+		- Numbers less than 0
+		- Numbers with decimals
+		- Empty Input
+		- Anything that is not a number (e.g characters, symbols, ect.)

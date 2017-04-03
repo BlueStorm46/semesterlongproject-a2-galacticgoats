@@ -1,11 +1,8 @@
 package code.ui;
 
-import java.awt.FlowLayout;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.IndexColorModel;
-import java.beans.EventHandler;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -31,6 +28,7 @@ public class UI {
 	
 	/** Global Variables */
 	public double escapeDistance = 2; 	// Default Escape Distance: 2
+	public int escapeTime = 255;		// Default Escape Time: 255
 	int currentFractal = 1;				// Default Fractal: Mandelbrot
 
 	public void createPanel() {
@@ -51,12 +49,17 @@ public class UI {
 		
 		/** Escape Distance & Exit Menu */
 		JMenuItem ced = new JMenuItem("Escape Distance...");
+		JMenuItem cet = new JMenuItem("Escape Time...");
 		JMenuItem exit = new JMenuItem("Quit");
 		file.add(ced);
+		file.add(cet);
 		file.add(exit);
 		/** Escape Distance ActionListener */
 		ActionListener ed = new escapeDistanceHandler();
 		ced.addActionListener(ed);
+		/** Escape Time ActionListener */
+		ActionListener et = new escapeTimeHandler();
+		cet.addActionListener(et);
 		/** Quit ActionListener */
 		ActionListener eh = new exitHandler();
 		exit.addActionListener(eh);
@@ -103,14 +106,22 @@ public class UI {
 		frame.setVisible(true);
 		
 		/** Draws Default Fractal */
-//		updateColor(1);
-//		updateFractal(currentFractal);
+		updateColor(1); // For some reason, the update color method must be called at least once in order to draw the fractals correctly.
+		
+		// updateFractal(currentFractal);
 	}
 	
 	public class escapeDistanceHandler implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			updateEscapeDistance();
+		}
+	}
+	
+	public class escapeTimeHandler implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			updateEscapeTime();
 		}
 	}
 	
@@ -201,6 +212,27 @@ public class UI {
 		}
 		updateFractal(currentFractal);
 	}
+	
+	public void updateEscapeTime() {
+		String et = "0";
+		et = JOptionPane.showInputDialog(frame, "Default: 255\n\nEnter integer greater than 0:");
+		try { 
+			if (Integer.parseInt(et) > 0) {
+				escapeTime = Integer.parseInt(et);
+			}
+			else {
+				updateEscapeTime();
+			}
+			
+		}
+		catch (NumberFormatException InvalidFormat) {
+			updateEscapeTime();
+		}
+		catch (NullPointerException EmptyString) {
+			/** Assume user hit the "Cancel" button and do nothing. */
+		}
+		updateFractal(currentFractal);
+	}
 
 	public void updateFractal(int num) {
 		panel.removeAll();
@@ -210,22 +242,22 @@ public class UI {
 		frame.pack();
 		if (currentFractal == 1) {
 			Mandelbrot mb = new Mandelbrot();
-			fp.updateImage(mb.createMandel(escapeDistance));
+			fp.updateImage(mb.createMandel(escapeDistance, escapeTime));
 		}
 
 		if (currentFractal == 2) {
 			Julia j = new Julia();
-			fp.updateImage(j.createJulia(escapeDistance));
+			fp.updateImage(j.createJulia(escapeDistance, escapeTime));
 		}
 
 		if (currentFractal == 3) {
 			BurningShip bs = new BurningShip();
-			fp.updateImage(bs.createBS(escapeDistance));
+			fp.updateImage(bs.createBS(escapeDistance, escapeTime));
 		}
 
 		if (currentFractal == 4) {
 			Multibrot mu = new Multibrot();
-			fp.updateImage(mu.createMulti(escapeDistance));
+			fp.updateImage(mu.createMulti(escapeDistance, escapeTime));
 		}
 
 	}
@@ -235,72 +267,72 @@ public class UI {
 			if (currentFractal == 1) {
 				Mandelbrot mb = new Mandelbrot();
 				fp.setIndexColorModel(ColorModelFactory.createRainbowColorModel(255));
-				fp.updateImage(mb.createMandel(escapeDistance));
+				fp.updateImage(mb.createMandel(escapeDistance, escapeTime));
 			}
 			if (currentFractal == 2) {
 				Julia j = new Julia();
 				fp.setIndexColorModel(ColorModelFactory.createRainbowColorModel(255));
-				fp.updateImage(j.createJulia(escapeDistance));
+				fp.updateImage(j.createJulia(escapeDistance, escapeTime));
 			}
 
 			if (currentFractal == 3) {
 				BurningShip bs = new BurningShip();
 				fp.setIndexColorModel(ColorModelFactory.createRainbowColorModel(255));
-				fp.updateImage(bs.createBS(escapeDistance));
+				fp.updateImage(bs.createBS(escapeDistance, escapeTime));
 			}
 
 			if (currentFractal == 4) {
 				Multibrot mu = new Multibrot();
 				fp.setIndexColorModel(ColorModelFactory.createRainbowColorModel(255));
-				fp.updateImage(mu.createMulti(escapeDistance));
+				fp.updateImage(mu.createMulti(escapeDistance, escapeTime));
 			}
 		}
 		if (n == 2) {
 			if (currentFractal == 1) {
 				Mandelbrot mb = new Mandelbrot();
 				fp.setIndexColorModel(ColorModelFactory.createBluesColorModel(255));
-				fp.updateImage(mb.createMandel(escapeDistance));
+				fp.updateImage(mb.createMandel(escapeDistance, escapeTime));
 			}
 			if (currentFractal == 2) {
 				Julia j = new Julia();
 				fp.setIndexColorModel(ColorModelFactory.createBluesColorModel(255));
-				fp.updateImage(j.createJulia(escapeDistance));
+				fp.updateImage(j.createJulia(escapeDistance, escapeTime));
 			}
 
 			if (currentFractal == 3) {
 				BurningShip bs = new BurningShip();
 				fp.setIndexColorModel(ColorModelFactory.createBluesColorModel(255));
-				fp.updateImage(bs.createBS(escapeDistance));
+				fp.updateImage(bs.createBS(escapeDistance, escapeTime));
 			}
 
 			if (currentFractal == 4) {
 				Multibrot mu = new Multibrot();
 				fp.setIndexColorModel(ColorModelFactory.createBluesColorModel(255));
-				fp.updateImage(mu.createMulti(escapeDistance));
+				fp.updateImage(mu.createMulti(escapeDistance, escapeTime));
 			}
 		}
 		if (n == 3) {
 			if (currentFractal == 1) {
 				Mandelbrot mb = new Mandelbrot();
 				fp.setIndexColorModel(ColorModelFactory.createGrayColorModel(255));
-				fp.updateImage(mb.createMandel(escapeDistance));
+				fp.updateImage(mb.createMandel(escapeDistance, escapeTime));
 			}
 			if (currentFractal == 2) {
 				Julia j = new Julia();
 				fp.setIndexColorModel(ColorModelFactory.createGrayColorModel(255));
-				fp.updateImage(j.createJulia(escapeDistance));
+				fp.updateImage(j.createJulia(escapeDistance, escapeTime));
 			}
 
 			if (currentFractal == 3) {
 				BurningShip bs = new BurningShip();
 				fp.setIndexColorModel(ColorModelFactory.createGrayColorModel(255));
-				fp.updateImage(bs.createBS(escapeDistance));
+				fp.updateImage(bs.createBS(escapeDistance, escapeTime));
 			}
 
 			if (currentFractal == 4) {
 				Multibrot mu = new Multibrot();
 				fp.setIndexColorModel(ColorModelFactory.createGrayColorModel(255));
-				fp.updateImage(mu.createMulti(escapeDistance));
+				fp.updateImage(mu.createMulti(escapeDistance, escapeTime));
 			}
 		}
 	}
