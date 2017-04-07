@@ -86,17 +86,21 @@ public class UI {
 		/** Color Menu Buttons */
 		JMenuItem rainbow = new JMenuItem("Rainbow");
 		JMenuItem blue = new JMenuItem("Blue");
+		JMenuItem green = new JMenuItem("Green");
 		JMenuItem gray = new JMenuItem("Gray");
 		color.add(rainbow);
 		color.add(blue);
+		color.add(green);
 		color.add(gray);
 		/** Color Menu ActionListerners */
 		ActionListener rh = new rainbowHandler();
 		rainbow.addActionListener(rh);
 		ActionListener bh = new blueHandler();
 		blue.addActionListener(bh);
-		ActionListener gh = new grayHandler();
-		gray.addActionListener(gh);
+		ActionListener gh = new greenHandler();
+		green.addActionListener(gh);
+		ActionListener grh = new grayHandler();
+		gray.addActionListener(grh);
 
 		/** Finish Creating GUI */
 		frame.setJMenuBar(menuBar);
@@ -172,9 +176,18 @@ public class UI {
 	public class blueHandler implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			IndexColorModel icm = ColorModelFactory.createBluesColorModel(255);
+			IndexColorModel icm = ColorModelFactory.createBlueColorModel(255);
 			fp.setIndexColorModel(icm);
 			updateColor(2);
+		}
+	}
+	
+	public class greenHandler implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			IndexColorModel icm = ColorModelFactory.createGreenColorModel(255);
+			fp.setIndexColorModel(icm);
+			updateColor(3);
 		}
 	}
 
@@ -183,7 +196,7 @@ public class UI {
 		public void actionPerformed(ActionEvent e) {
 			IndexColorModel icm = ColorModelFactory.createGrayColorModel(255);
 			fp.setIndexColorModel(icm);
-			updateColor(3);
+			updateColor(4);
 		}
 	}
 
@@ -193,8 +206,7 @@ public class UI {
 	 * 	This will continue until the user enters a valid number, or clicks the "Cancel" button.
 	 */
 	public void updateEscapeDistance() {
-		String ed = "0";
-		ed = JOptionPane.showInputDialog(frame, "Default: 2.0\n\nEnter number greater than 0:");
+		String ed = JOptionPane.showInputDialog(frame, "Default: 2.0\n\nEnter number greater than 0:");
 		try { 
 			if (Double.parseDouble(ed) > 0) {
 				escapeDistance = Double.parseDouble(ed);
@@ -214,8 +226,7 @@ public class UI {
 	}
 	
 	public void updateEscapeTime() {
-		String et = "0";
-		et = JOptionPane.showInputDialog(frame, "Default: 255\n\nEnter integer greater than 0:");
+		String et = JOptionPane.showInputDialog(frame, "Default: 255\n\nEnter integer greater than 0:");
 		try { 
 			if (Integer.parseInt(et) > 0) {
 				escapeTime = Integer.parseInt(et);
@@ -290,28 +301,52 @@ public class UI {
 		if (n == 2) {
 			if (currentFractal == 1) {
 				Mandelbrot mb = new Mandelbrot();
-				fp.setIndexColorModel(ColorModelFactory.createBluesColorModel(255));
+				fp.setIndexColorModel(ColorModelFactory.createBlueColorModel(255));
 				fp.updateImage(mb.createMandel(escapeDistance, escapeTime));
 			}
 			if (currentFractal == 2) {
 				Julia j = new Julia();
-				fp.setIndexColorModel(ColorModelFactory.createBluesColorModel(255));
+				fp.setIndexColorModel(ColorModelFactory.createBlueColorModel(255));
 				fp.updateImage(j.createJulia(escapeDistance, escapeTime));
 			}
 
 			if (currentFractal == 3) {
 				BurningShip bs = new BurningShip();
-				fp.setIndexColorModel(ColorModelFactory.createBluesColorModel(255));
+				fp.setIndexColorModel(ColorModelFactory.createBlueColorModel(255));
 				fp.updateImage(bs.createBS(escapeDistance, escapeTime));
 			}
 
 			if (currentFractal == 4) {
 				Multibrot mu = new Multibrot();
-				fp.setIndexColorModel(ColorModelFactory.createBluesColorModel(255));
+				fp.setIndexColorModel(ColorModelFactory.createBlueColorModel(255));
 				fp.updateImage(mu.createMulti(escapeDistance, escapeTime));
 			}
 		}
 		if (n == 3) {
+			if (currentFractal == 1) {
+				Mandelbrot mb = new Mandelbrot();
+				fp.setIndexColorModel(ColorModelFactory.createGreenColorModel(255));
+				fp.updateImage(mb.createMandel(escapeDistance, escapeTime));
+			}
+			if (currentFractal == 2) {
+				Julia j = new Julia();
+				fp.setIndexColorModel(ColorModelFactory.createGreenColorModel(255));
+				fp.updateImage(j.createJulia(escapeDistance, escapeTime));
+			}
+
+			if (currentFractal == 3) {
+				BurningShip bs = new BurningShip();
+				fp.setIndexColorModel(ColorModelFactory.createGreenColorModel(255));
+				fp.updateImage(bs.createBS(escapeDistance, escapeTime));
+			}
+
+			if (currentFractal == 4) {
+				Multibrot mu = new Multibrot();
+				fp.setIndexColorModel(ColorModelFactory.createGreenColorModel(255));
+				fp.updateImage(mu.createMulti(escapeDistance, escapeTime));
+			}
+		}
+		if (n == 4) {
 			if (currentFractal == 1) {
 				Mandelbrot mb = new Mandelbrot();
 				fp.setIndexColorModel(ColorModelFactory.createGrayColorModel(255));

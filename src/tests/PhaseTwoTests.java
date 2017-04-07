@@ -13,22 +13,22 @@ public class PhaseTwoTests {
 			- Multibrot Set: (0.7025440313111545, -0.5520547945205528) */
 	
 	@Test
-	  public final void MandelbrotTenLoopPasses() {
+	  public final void Mandelbrot10Loops() {
 		Mandelbrot ma = new Mandelbrot();
 	    assertEquals(10, ma.escapeTime(0.46007827788650374, -0.33835616438356616, 3, 255), 0.001);
 	  }
 	@Test
-	  public final void JuliaTenLoopPasses() {
+	  public final void Julia10Loops() {
 	    Julia j = new Julia();
 	    assertEquals(10, j.escapeTime(1.4538160469667272, -0.13502935420743645, 3, 255), 0.001);
 	  }
 	@Test
-	  public final void BurningShipTenLoopPasses() {
+	  public final void BurningShip10Loops() {
 	    BurningShip bs = new BurningShip();
 	    assertEquals(10, bs.escapeTime(-1.6999999999999802, 0.0030136986301371603, 3, 255), 0.001);
 	  }
 	@Test
-	  public final void MultibrotTenLoopPasses() {
+	  public final void Multibrot10Loops() {
 		Multibrot mu = new Multibrot();
 	    assertEquals(10, mu.escapeTime(0.7025440313111545, -0.5520547945205528, 3, 255), 0.001);
 	  }
