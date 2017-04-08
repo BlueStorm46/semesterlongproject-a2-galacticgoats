@@ -8,8 +8,8 @@ public class Multibrot {
 		double xCord = xCalc; // Current point's x-coordinate
 		double yCord = yCalc; // Current point's y-coordinate
 		while (distance <= escapeDistance && passes < escapeTime) {
-			/** x' = x� - (3 * x * y�) + current point's x-coordinate
-				y' = (3 * x� * y) - y� + current point's y-coordinate
+			/** x' = x^3 - (3 * x * y^2) + current point's x-coordinate
+				y' = (3 * x^2 * y) - y^3 + current point's y-coordinate
 			  		Where x and y are the values of xCalc and yCalc prior to this update and x' and y' are their values after the update. */
 			double tempX = xCalc; // x
 			double tempY = yCalc; // y
@@ -21,12 +21,7 @@ public class Multibrot {
 		return passes;
 	}
 
-	public int[][] createMulti(double escapeDistance, int escapeTime) {
-		/** X-coordinate range from -1 to 1
-			Y-coordinate range from -1.3 to 1.3 */
-		double x_min = -1, x_max = 1;
-		double y_min = -1.3, y_max = 1.3;
-
+	public int[][] createMulti(double x_min, double x_max, double y_min, double y_max, double escapeDistance, int escapeTime) {
 		/** Each pixel represents a real coordinate */
 		double x_range = (x_max - x_min)/512;
 		double y_range = (y_max - y_min)/512;

@@ -6,7 +6,7 @@ public class Julia {
 		double distance = Math.sqrt(Math.pow(xCalc, 2) + Math.pow(yCalc, 2));
 		int passes = 0;
 		while (distance <= escapeDistance && passes < escapeTime) {
-			/** x' = x� - y� + -0.72689
+			/** x' = x^2 - y^2 + -0.72689
 				y' = 2 * x * y + 0.188887
 			   		Where x and y are the values of xCalc and yCalc prior to this update and x' and y' are their values after the update. */
 			double tempX = xCalc; // x
@@ -19,12 +19,7 @@ public class Julia {
 		return passes;
 	}
 
-	public int[][] createJulia(double escapeDistance, int escapeTime) {
-		/** X-coordinate range from -1.7 to 1.7
-		Y-coordinate range from -1.0 to 1.0 */
-		double x_min = -1.7, x_max = 1.7;
-		double y_min = -1.0, y_max = 1.0;
-
+	public int[][] createJulia(double x_min, double x_max, double y_min, double y_max, double escapeDistance, int escapeTime) {
 		/** Each pixel represents a real coordinate */
 		double x_range = (x_max - x_min)/512;
 		double y_range = (y_max - y_min)/512;

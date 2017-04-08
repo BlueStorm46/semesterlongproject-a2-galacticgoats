@@ -8,7 +8,7 @@ public class BurningShip {
 		double xCord = xCalc; // Current point's x-coordinate
 		double yCord = yCalc; // Current point's y-coordinate
 		while (distance <= escapeDistance && passes < escapeTime) {
-			/** x' = x� - y� + current point's x-coordinate
+			/** x' = x^2 - y^2 + current point's x-coordinate
 				y' = Math.abs(2 * x * y) + current point's y-coordinate
 			   		Where x and y are the values of xCalc and yCalc prior to this update and x' and y' are their values after the update. */
 			double tempX = xCalc; // x
@@ -21,12 +21,7 @@ public class BurningShip {
 		return passes;
 	}
 
-	public int[][] createBS(double escapeDistance, int escapeTime) {
-		/** X-coordinate range from -1.8 to -1.7
-			Y-coordinate range from -0.08 to 0.025 */
-		double x_min = -1.8, x_max = -1.7;
-		double y_min = -0.08, y_max = 0.025;
-
+	public int[][] createBS(double x_min, double x_max, double y_min, double y_max, double escapeDistance, int escapeTime) {
 		/** Each pixel represents a real coordinate */
 		double x_range = (x_max - x_min)/512;
 		double y_range = (y_max - y_min)/512;
