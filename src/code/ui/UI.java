@@ -1,9 +1,12 @@
 package code.ui;
 
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.image.IndexColorModel;
-
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -16,21 +19,21 @@ import edu.buffalo.fractal.FractalPanel;
 
 public class UI {
 
-	public UI() {
-		createPanel();
-	}
-
 	/** Instance Variables */
 	FractalPanel fp;
 	JFrame frame;
 	JMenuBar menuBar;
 	JPanel panel;
-	
+
 	/** Global Variables */
-	public double escapeDistance = 2; 			// Default Escape Distance: 2
-	public int escapeTime = 255;				// Default Escape Time: 255
-	int currentFractal = 1;						// Default Fractal: Mandelbrot
+	public double escapeDistance = 2; 	// Default Escape Distance: 2
+	public int escapeTime = 255; 		// Default Escape Time: 255
+	int currentFractal = 1; 			// Default Fractal: Mandelbrot
 	public double x_min, x_max, y_min, y_max;
+	
+	public UI() {
+		createPanel();
+	}
 
 	public void createPanel() {
 
@@ -38,7 +41,12 @@ public class UI {
 		fp = new FractalPanel();
 		frame = new JFrame("Fractal Panel");
 		panel = new JPanel();
-		menuBar = new JMenuBar(); 
+		menuBar = new JMenuBar();
+		
+		/** Ability to use mouse controls */
+		MouseDragHandler mdh = new MouseDragHandler();
+		fp.addMouseListener(mdh);
+		fp.addMouseMotionListener(mdh);
 
 		/** MENUBAR MENUS */
 		JMenu file = new JMenu("File");
@@ -47,7 +55,7 @@ public class UI {
 		menuBar.add(file);
 		menuBar.add(fractal);
 		menuBar.add(color);
-		
+
 		/** FILE MENU */
 		JMenuItem crz = new JMenuItem("Reset Fractal");
 		JMenuItem ced = new JMenuItem("Escape Distance...");
@@ -80,9 +88,9 @@ public class UI {
 		fractal.add(burningShip);
 		fractal.add(multibrot);
 		/** Fractal Menu ActionListerners */
-		ActionListener mb = new MandelbrotEventHandler();
+		ActionListener mb = new MandelbrotHandler();
 		mandelbrot.addActionListener(mb);
-		ActionListener j = new JuliaEventHandler();
+		ActionListener j = new JuliaHandler();
 		julia.addActionListener(j);
 		ActionListener bs = new BurningShipHandler();
 		burningShip.addActionListener(bs);
@@ -114,37 +122,35 @@ public class UI {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
-		
-		/** Draws Default Fractal */
+
+		/** Sets Default Fractal Properties */
 		resetZoom();
-		updateColor(1); // For some reason, the update color method must be called at least once in order to draw the fractals correctly.
-		
-		// updateFractal(currentFractal);
+		updateColor(1);
 	}
-	
+
 	/** EVENT HANDLERS */
-	
+
 	public class resetZoomHandler implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			resetZoom();
 		}
 	}
-	
+
 	public class escapeDistanceHandler implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			updateEscapeDistance();
 		}
 	}
-	
+
 	public class escapeTimeHandler implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			updateEscapeTime();
 		}
 	}
-	
+
 	public class exitHandler implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -152,7 +158,7 @@ public class UI {
 		}
 	}
 
-	public class MandelbrotEventHandler implements ActionListener {
+	public class MandelbrotHandler implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			currentFractal = 1;
@@ -161,7 +167,7 @@ public class UI {
 		}
 	}
 
-	public class JuliaEventHandler implements ActionListener {
+	public class JuliaHandler implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			currentFractal = 2;
@@ -194,24 +200,27 @@ public class UI {
 			IndexColorModel icm = ColorModelFactory.createGrayColorModel(255);
 			fp.setIndexColorModel(icm);
 			updateColor(1);
+			updateFractal();
 		}
 	}
-	
+
 	public class blueHandler implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			IndexColorModel icm = ColorModelFactory.createBlueColorModel(255);
 			fp.setIndexColorModel(icm);
 			updateColor(2);
+			updateFractal();
 		}
 	}
-	
+
 	public class greenHandler implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			IndexColorModel icm = ColorModelFactory.createGreenColorModel(255);
 			fp.setIndexColorModel(icm);
 			updateColor(3);
+			updateFractal();
 		}
 	}
 
@@ -221,65 +230,117 @@ public class UI {
 			IndexColorModel icm = ColorModelFactory.createGrayColorModel(255);
 			fp.setIndexColorModel(icm);
 			updateColor(4);
+			updateFractal();
+		}
+	}
+
+	public class MouseDragHandler implements MouseListener, MouseMotionListener {
+		Point startDrag, endDrag;
+
+		public void mousePressed(MouseEvent e) {
+			startDrag = new Point(e.getX(), e.getY());
+			endDrag = startDrag;
+			System.out.println("StartDrag: " + startDrag);
+		}
+
+		public void mouseDragged(MouseEvent e) {
+			endDrag = new Point(e.getX(), e.getY());
+		}
+
+		public void mouseReleased(MouseEvent e) {
+			double x_range = (x_max - x_min) / 512;
+			double y_range = (y_max - y_min) / 512;
+			x_min = x_min + (startDrag.x * x_range);
+			x_max = x_min + (endDrag.x * x_range);
+			y_min = y_min + (startDrag.y * y_range);
+			y_max = y_min + (endDrag.y * y_range);
+
+			System.out.println("EndDrag:   " + endDrag + "\n");
+			
+			startDrag = null;
+			endDrag = null;
+
+			updateFractal();
+		}
+
+		public void mouseMoved(MouseEvent arg0) {
+		}
+
+		public void mouseClicked(MouseEvent arg0) {
+		}
+
+		public void mouseEntered(MouseEvent arg0) {
+		}
+
+		public void mouseExited(MouseEvent arg0) {
 		}
 	}
 
 	/** USEFUL METHODS */
-	
+
 	public void resetZoom() {
 		if (currentFractal == 1) {
-			x_min = -2.15; x_max = 0.6;
-			y_min = -1.3; y_max = 1.3;
+			x_min = -2.15;
+			x_max = 0.6;
+			y_min = -1.3;
+			y_max = 1.3;
 		}
-
 		if (currentFractal == 2) {
-			x_min = -1.7; x_max = 1.7;
-			y_min = -1.0; y_max = 1.0;
+			x_min = -1.7;
+			x_max = 1.7;
+			y_min = -1.0;
+			y_max = 1.0;
 		}
-
 		if (currentFractal == 3) {
-			x_min = -1.8; x_max = -1.7;
-			y_min = -0.08; y_max = 0.025;
+			x_min = -1.8;
+			x_max = -1.7;
+			y_min = -0.08;
+			y_max = 0.025;
 		}
-
 		if (currentFractal == 4) {
-			x_min = -1; x_max = 1;
-			y_min = -1.3; y_max = 1.3;
+			x_min = -1;
+			x_max = 1;
+			y_min = -1.3;
+			y_max = 1.3;
 		}
-		updateFractal();
 	}
-	
+
 	public void updateEscapeDistance() {
-		/** The user inputs a value that is stored as a string. The string is then converted into a double using parseDouble.
-		 * 	If the user enters anything that isn't a number, a NumberFormatException is thrown, and the user will be asked to input a new value.
-		 * 	If the user enters a number less than or equal to zero, it is rejected, and the user is asked to input once more.
-		 * 	This will continue until the user enters a valid number, or clicks the "Cancel" button.
+		/**
+		 * The user inputs a value that is stored as a string. The string is
+		 * then converted into a double using parseDouble. If the user enters
+		 * anything that isn't a number, a NumberFormatException is thrown, and
+		 * the user will be asked to input a new value. If the user enters a
+		 * number less than or equal to zero, it is rejected, and the user is
+		 * asked to input once more. This will continue until the user enters a
+		 * valid number, or clicks the "Cancel" button.
 		 */
 		String ed = JOptionPane.showInputDialog(frame, "Default: 2.0\n\nEnter number greater than 0:");
 		try {
 			if (Double.parseDouble(ed) > 0) {
 				escapeDistance = Double.parseDouble(ed);
-			}
-			else {
+			} else {
 				updateEscapeDistance();
 			}
-			
-		}
-		catch (NumberFormatException InvalidFormat) {
+
+		} catch (NumberFormatException InvalidFormat) {
 			updateEscapeDistance();
-		}
-		catch (NullPointerException EmptyString) {
+		} catch (NullPointerException EmptyString) {
 			/** Assume user hit the "Cancel" button and do nothing. */
 			return;
 		}
 		updateFractal();
 	}
-	
+
 	public void updateEscapeTime() {
-		/** The user inputs a value that is stored as a string. The string is then converted into an int using parseInt.
-		 * 	If the user enters anything that isn't a number, a NumberFormatException is thrown, and the user will be asked to input a new value.
-		 * 	If the user enters a number less than or equal to zero, it is rejected, and the user is asked to input once more.
-		 * 	This will continue until the user enters a valid number, or clicks the "Cancel" button.
+		/**
+		 * The user inputs a value that is stored as a string. The string is
+		 * then converted into an int using parseInt. If the user enters
+		 * anything that isn't a number, a NumberFormatException is thrown, and
+		 * the user will be asked to input a new value. If the user enters a
+		 * number less than or equal to zero, it is rejected, and the user is
+		 * asked to input once more. This will continue until the user enters a
+		 * valid number, or clicks the "Cancel" button.
 		 */
 		String et = JOptionPane.showInputDialog(frame, "Default: 255\n\nEnter integer greater than 0:");
 		if (et == null) {
@@ -289,12 +350,10 @@ public class UI {
 		try {
 			if (Integer.parseInt(et) > 0) {
 				escapeTime = Integer.parseInt(et);
-			}
-			else {
+			} else {
 				updateEscapeTime();
 			}
-		}
-		catch (NumberFormatException InvalidFormat) {
+		} catch (NumberFormatException InvalidFormat) {
 			updateEscapeTime();
 		}
 		updateFractal();
@@ -313,35 +372,28 @@ public class UI {
 			Julia j = new Julia();
 			fp.updateImage(j.createJulia(x_min, x_max, y_min, y_max, escapeDistance, escapeTime));
 		}
-
 		if (currentFractal == 3) {
 			BurningShip bs = new BurningShip();
 			fp.updateImage(bs.createBS(x_min, x_max, y_min, y_max, escapeDistance, escapeTime));
 		}
-
 		if (currentFractal == 4) {
 			Multibrot mu = new Multibrot();
 			fp.updateImage(mu.createMulti(x_min, x_max, y_min, y_max, escapeDistance, escapeTime));
 		}
-
 	}
 
 	public void updateColor(int color) {
 		if (color == 1) {
 			fp.setIndexColorModel(ColorModelFactory.createRainbowColorModel(255));
-			updateFractal();
 		}
 		if (color == 2) {
 			fp.setIndexColorModel(ColorModelFactory.createBlueColorModel(255));
-			updateFractal();
 		}
 		if (color == 3) {
 			fp.setIndexColorModel(ColorModelFactory.createGreenColorModel(255));
-			updateFractal();
 		}
 		if (color == 4) {
 			fp.setIndexColorModel(ColorModelFactory.createGrayColorModel(255));
-			updateFractal();
 		}
 	}
 }
