@@ -251,7 +251,7 @@ public class UI {
 		public void mousePressed(MouseEvent e) {
 			startDrag = new Point(e.getX(), e.getY());
 			endDrag = startDrag;
-			//System.out.println("StartDrag: " + startDrag);
+			System.out.println("StartDrag: " + startDrag);
 		}
 
 		public void mouseDragged(MouseEvent e) {
@@ -266,7 +266,7 @@ public class UI {
 			y_min = y_min + (startDrag.y * y_range);
 			y_max = y_min + (endDrag.y * y_range);
 
-			//System.out.println("EndDrag:   " + endDrag + "\n");
+			System.out.println("EndDrag:   " + endDrag + "\n");
 			
 			startDrag = null;
 			endDrag = null;
