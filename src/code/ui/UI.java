@@ -1,13 +1,14 @@
 package code.ui;
 
+import java.awt.Font;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.awt.image.IndexColorModel;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -24,6 +25,7 @@ public class UI {
 	JFrame frame;
 	JMenuBar menuBar;
 	JPanel panel;
+	JLabel label;
 
 	/** Global Variables */
 	public double escapeDistance = 2; 	// Default Escape Distance: 2
@@ -38,9 +40,9 @@ public class UI {
 	public void createPanel() {
 
 		/** JFrame Skeleton */
-		fp = new FractalPanel();
 		frame = new JFrame("Fractal Panel");
 		panel = new JPanel();
+		fp = new FractalPanel();
 		menuBar = new JMenuBar();
 		
 		/** Ability to use mouse controls */
@@ -49,14 +51,14 @@ public class UI {
 		fp.addMouseMotionListener(mdh);
 
 		/** MENUBAR MENUS */
-		JMenu file = new JMenu("File");
+		JMenu file = new JMenu("Options");
 		JMenu fractal = new JMenu("Fractal");
 		JMenu color = new JMenu("Color");
 		menuBar.add(file);
 		menuBar.add(fractal);
 		menuBar.add(color);
 
-		/** FILE MENU */
+		/** OPTIONS MENU */
 		JMenuItem crz = new JMenuItem("Reset Fractal");
 		JMenuItem ced = new JMenuItem("Escape Distance...");
 		JMenuItem cet = new JMenuItem("Escape Time...");
@@ -117,12 +119,19 @@ public class UI {
 		gray.addActionListener(grh);
 
 		/** Finish Creating GUI */
+		label = new JLabel();
+		label.setText("\u2191 Select a Fractal to Begin    ");
+		label.setFont(new Font("Serif", Font.PLAIN, 30));
+		label.setVerticalAlignment(JLabel.TOP);
+	    label.setHorizontalAlignment(JLabel.CENTER);
+	    frame.add(label);
+	    
 		frame.setJMenuBar(menuBar);
 		frame.setSize(512, 512);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
-
+	    
 		/** Sets Default Fractal Properties */
 		resetZoom();
 		updateColor(1);
@@ -134,6 +143,7 @@ public class UI {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			resetZoom();
+			updateFractal();
 		}
 	}
 
@@ -234,13 +244,14 @@ public class UI {
 		}
 	}
 
-	public class MouseDragHandler implements MouseListener, MouseMotionListener {
+	/** MOUSE HANDLER */
+	public class MouseDragHandler extends MouseAdapter {
 		Point startDrag, endDrag;
 
 		public void mousePressed(MouseEvent e) {
 			startDrag = new Point(e.getX(), e.getY());
 			endDrag = startDrag;
-			System.out.println("StartDrag: " + startDrag);
+			//System.out.println("StartDrag: " + startDrag);
 		}
 
 		public void mouseDragged(MouseEvent e) {
@@ -255,7 +266,7 @@ public class UI {
 			y_min = y_min + (startDrag.y * y_range);
 			y_max = y_min + (endDrag.y * y_range);
 
-			System.out.println("EndDrag:   " + endDrag + "\n");
+			//System.out.println("EndDrag:   " + endDrag + "\n");
 			
 			startDrag = null;
 			endDrag = null;
@@ -275,7 +286,7 @@ public class UI {
 		public void mouseExited(MouseEvent arg0) {
 		}
 	}
-
+	
 	/** USEFUL METHODS */
 
 	public void resetZoom() {
@@ -360,6 +371,7 @@ public class UI {
 	}
 
 	public void updateFractal() {
+		frame.remove(label);
 		panel.removeAll();
 		panel.add(fp);
 		frame.add(panel);
