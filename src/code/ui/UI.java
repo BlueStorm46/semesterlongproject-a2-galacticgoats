@@ -420,19 +420,19 @@ public class UI {
 		frame.pack();
 		if (currentFractal == 1) {
 			Mandelbrot mb = new Mandelbrot();
-			fp.updateImage(mb.createMandel(x_min, x_max, y_min, y_max, escapeDistance, escapeTime));
+			fp.updateImage(mb.createMandel(x_min, x_max, y_min, y_max, escapeDistance, escapeTime, threads));
 		}
 		if (currentFractal == 2) {
 			Julia j = new Julia();
-			fp.updateImage(j.createJulia(x_min, x_max, y_min, y_max, escapeDistance, escapeTime));
+			fp.updateImage(j.createJulia(x_min, x_max, y_min, y_max, escapeDistance, escapeTime, threads));
 		}
 		if (currentFractal == 3) {
 			BurningShip bs = new BurningShip();
-			fp.updateImage(bs.createBS(x_min, x_max, y_min, y_max, escapeDistance, escapeTime));
+			fp.updateImage(bs.createBS(x_min, x_max, y_min, y_max, escapeDistance, escapeTime, threads));
 		}
 		if (currentFractal == 4) {
 			Multibrot mu = new Multibrot();
-			fp.updateImage(mu.createMulti(x_min, x_max, y_min, y_max, escapeDistance, escapeTime));
+			fp.updateImage(mu.createMulti(x_min, x_max, y_min, y_max, escapeDistance, escapeTime, threads));
 		}
 	}
 

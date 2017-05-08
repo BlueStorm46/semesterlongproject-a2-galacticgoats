@@ -2,7 +2,7 @@ package code.fractals;
 
 public class Mandelbrot {
 
-	public double escapeTime(double xCalc, double yCalc, double escapeDistance, int escapeTime) {
+	public double escapeTime(double xCalc, double yCalc, double escapeDistance, int escapeTime, int threads) {
 		double distance = Math.sqrt(Math.pow(xCalc, 2) + Math.pow(yCalc, 2));
 		int passes = 0;
 		double xCord = xCalc; // Current point's x-coordinate
@@ -21,7 +21,7 @@ public class Mandelbrot {
 		return passes;
 	}
 
-	public int[][] createMandel(double x_min, double x_max, double y_min, double y_max, double escapeDistance, int escapeTime) { 
+	public int[][] createMandel(double x_min, double x_max, double y_min, double y_max, double escapeDistance, int escapeTime, int threads) { 
 		/** Each pixel represents a real coordinate */
 		double x_range = (x_max - x_min)/512;
 		double y_range = (y_max - y_min)/512;
@@ -40,7 +40,7 @@ public class Mandelbrot {
 			x_current_cord = x_current_cord + x_range;
 			for (int y = 0; y < 512; y++) {
 				y_current_cord = y_current_cord + y_range;
-				grid[x][y] = (int) escapeTime(x_current_cord, y_current_cord, escapeDistance, escapeTime);
+				grid[x][y] = (int) escapeTime(x_current_cord, y_current_cord, escapeDistance, escapeTime, threads);
 			}
 			/** Reset y-coordinate pixel */
 			y_current_cord = y_min;
