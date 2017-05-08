@@ -1,0 +1,10 @@
+In order to edit the number of threads used in processing the fractal, navigate to the top menubar...
+1. File -> Threads...
+2. The user will be prompted to enter in a number between 1 and 128.
+		Rejected inputs:
+		- Numbers less than 0
+		- Numbers greater than 128
+		- Empty inputs
+		- Anything that is not a number (e.g characters, symbols, ect.)
+		
+(This method can be checked manually in /src/code/ui.java -> public void updateThreads())

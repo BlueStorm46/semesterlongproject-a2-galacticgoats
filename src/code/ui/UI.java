@@ -28,11 +28,12 @@ public class UI {
 	JLabel label;
 
 	/** Global Variables */
-	public double escapeDistance = 2; 	// Default Escape Distance: 2
-	public int escapeTime = 255; 		// Default Escape Time: 255
-	int currentFractal = 1; 			// Default Fractal: Mandelbrot
+	public double escapeDistance = 2; // Default Escape Distance: 2
+	public int escapeTime = 255; // Default Escape Time: 255
+	public int threads = 1; // Default Threads: 1
+	int currentFractal = 1; // Default Fractal: Mandelbrot
 	public double x_min, x_max, y_min, y_max;
-	
+
 	public UI() {
 		createPanel();
 	}
@@ -44,7 +45,7 @@ public class UI {
 		panel = new JPanel();
 		fp = new FractalPanel();
 		menuBar = new JMenuBar();
-		
+
 		/** Ability to use mouse controls */
 		MouseDragHandler mdh = new MouseDragHandler();
 		fp.addMouseListener(mdh);
@@ -62,10 +63,12 @@ public class UI {
 		JMenuItem crz = new JMenuItem("Reset Fractal");
 		JMenuItem ced = new JMenuItem("Escape Distance...");
 		JMenuItem cet = new JMenuItem("Escape Time...");
+		JMenuItem cth = new JMenuItem("Threads...");
 		JMenuItem exit = new JMenuItem("Quit");
 		file.add(crz);
 		file.add(ced);
 		file.add(cet);
+		file.add(cth);
 		file.add(exit);
 		/** Reset Zoom ActionListener */
 		ActionListener rz = new resetZoomHandler();
@@ -76,6 +79,9 @@ public class UI {
 		/** Escape Time ActionListener */
 		ActionListener et = new escapeTimeHandler();
 		cet.addActionListener(et);
+		/** Threads ActionListener */
+		ActionListener th = new threadsHandler();
+		cth.addActionListener(th);
 		/** Quit ActionListener */
 		ActionListener eh = new exitHandler();
 		exit.addActionListener(eh);
@@ -123,15 +129,15 @@ public class UI {
 		label.setText("\u2191 Select a Fractal to Begin    ");
 		label.setFont(new Font("Serif", Font.PLAIN, 30));
 		label.setVerticalAlignment(JLabel.TOP);
-	    label.setHorizontalAlignment(JLabel.CENTER);
-	    frame.add(label);
-	    
+		label.setHorizontalAlignment(JLabel.CENTER);
+		frame.add(label);
+
 		frame.setJMenuBar(menuBar);
 		frame.setSize(512, 512);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
-	    
+
 		/** Sets Default Fractal Properties */
 		resetZoom();
 		updateColor(1);
@@ -158,6 +164,13 @@ public class UI {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			updateEscapeTime();
+		}
+	}
+
+	public class threadsHandler implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			updateThreads();
 		}
 	}
 
@@ -267,7 +280,7 @@ public class UI {
 			y_max = y_min + (endDrag.y * y_range);
 
 			System.out.println("EndDrag:   " + endDrag + "\n");
-			
+
 			startDrag = null;
 			endDrag = null;
 
@@ -286,7 +299,7 @@ public class UI {
 		public void mouseExited(MouseEvent arg0) {
 		}
 	}
-	
+
 	/** USEFUL METHODS */
 
 	public void resetZoom() {
@@ -347,11 +360,12 @@ public class UI {
 		/**
 		 * The user inputs a value that is stored as a string. The string is
 		 * then converted into an int using parseInt. If the user enters
-		 * anything that isn't a number, a NumberFormatException is thrown, and
-		 * the user will be asked to input a new value. If the user enters a
-		 * number less than or equal to zero, it is rejected, and the user is
-		 * asked to input once more. This will continue until the user enters a
-		 * valid number, or clicks the "Cancel" button.
+		 * anything that isn't a number, a NumberFormatException is thrown,
+		 * which is caught by the method and restarts the method to prompt the
+		 * user for a valid input. If the user enters a number less than or
+		 * equal to zero, it is rejected, and the user is asked to input once
+		 * more. This will continue until the user either enters a valid number,
+		 * or clicks the "Cancel" button.
 		 */
 		String et = JOptionPane.showInputDialog(frame, "Default: 255\n\nEnter integer greater than 0:");
 		if (et == null) {
@@ -359,13 +373,41 @@ public class UI {
 			return;
 		}
 		try {
-			if (Integer.parseInt(et) > 0) {
+			if (Integer.parseInt(et) >= 1) {
 				escapeTime = Integer.parseInt(et);
 			} else {
 				updateEscapeTime();
 			}
 		} catch (NumberFormatException InvalidFormat) {
 			updateEscapeTime();
+		}
+		updateFractal();
+	}
+
+	public void updateThreads() {
+		/**
+		 * The user inputs a value that is stored as a string. The string is
+		 * then converted into an int using parseInt. If the user enters
+		 * anything that isn't a number, a NumberFormatException is thrown,
+		 * which is caught by the method and restarts the method to prompt the
+		 * user for a valid input. If the user enters a number less than 0 or
+		 * greater than 128, it is rejected, and the user is asked to input once
+		 * more. This will continue until the user either enters a valid number,
+		 * or clicks the "Cancel" button.
+		 */
+		String th = JOptionPane.showInputDialog(frame, "Default: 1\n\nEnter integer between 0 and 128:");
+		if (th == null) {
+			/** Assume user hit the "Cancel" button and do nothing. */
+			return;
+		}
+		try {
+			if (Integer.parseInt(th) >= 1 && Integer.parseInt(th) <= 128) {
+				threads = Integer.parseInt(th);
+			} else {
+				updateThreads();
+			}
+		} catch (NumberFormatException InvalidFormat) {
+			updateThreads();
 		}
 		updateFractal();
 	}

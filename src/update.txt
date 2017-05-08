@@ -5,7 +5,7 @@ Escape Distance:
 2. The user will be prompted to enter in a number greater than 0.
 		Rejected inputs:
 		- Numbers less than 0
-		- Empty input
+		- Empty inputs
 		- Anything that is not a number (e.g characters, symbols, ect.)
 
 Escape Time:
