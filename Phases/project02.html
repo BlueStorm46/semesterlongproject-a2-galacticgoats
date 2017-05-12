@@ -1,0 +1,218 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link type="text/css" rel="stylesheet"
+   href="http://www.cse.buffalo.edu/~mhertz/courses/cse116/stylesheet.php?page=header" />
+<link type="text/css" rel="stylesheet"
+   href="http://www.cse.buffalo.edu/~mhertz/courses/cse116/stylesheet.php?page=tables" />
+<link type="text/css" rel="stylesheet"
+   href="http://www.cse.buffalo.edu/~mhertz/courses/cse116/stylesheet.php?page=assign" />
+<link type="text/css" rel="stylesheet"
+   href="http://www.cse.buffalo.edu/~mhertz/courses/cse116/stylesheet.php?page=overview" />
+<title>Course Project Phase #2</title>
+</head>
+<body>
+   <div id="header">
+      <div id="classname">
+         <h1>
+            CSE 116/504 - Spring 2017<br />Intro. to Computer Science for Majors II
+         </h1>
+      </div>
+   </div>
+   <div id="title">
+      <h1>Course Project Phase #2</h1>
+      <h3>Due: 11:59PM on March 18</h3>
+   </div>
+   <div class="section">
+      <p><span class="name">Menu</span></p>
+      <ul>
+         <li><a href="#objectives">Objectives</a></li>
+         <li><a href="#description">Description</a></li>
+         <li><a href="#recitation"><span style="color: red">Recitation Activity for Week of Mar. 5 -
+                  Mar. 11</span></a></li>
+         <li><a href="#submit">How To Submit</a></li>
+         <li><a href="#rubric">Grading Rubric</a></li>
+      </ul>
+   </div>
+   <div class="section">
+      <a name="objectives"></a>
+      <h2 class="name">Objectives</h2>
+      <h3>Phase Objectives</h3>
+      <ul>
+         <li>Students will add functionality to their group's existing codebase.</li>
+         <li>Students will experience working in iterative software lifecycles.</li>
+         <li>Students will manage source code using version control software</li>
+         <li>Students will develop software as a member of a small team.</li>
+         <li>Students will develop an event-driven application including a graphical user interface.</li>
+      </ul>
+   </div>
+   <div class="section">
+      <a name="description"></a>
+      <h2 class="name">Phase Description</h2>
+      <p>Pretty pictures are not very pretty if they cannot be seen. So <span class="highlight">this phase is
+            all about the GUI</span>. To start, you should <a href="FractalPanel.jar">download this JAR file</a>. It contains a
+         single class, <span class="code">FractalPanel</span>. <span class="code">FractalPanel</span> is a subclass of <span
+         class="code">JPanel</span> that adds 2 methods which, when combined, display a fractal. The first method is <a
+         href="doc/edu/buffalo/fractal/FractalPanel.html#updateImage-int:A:A-" class="code">updateImage()</a>. This
+         method takes in your 2-d array of <span class="code">int</span> with the calculated escape time for each pixel.
+         This is the fractal that will then be drawn in the panel. It does this by using the value that was previously
+         provided by a second method: <a
+         href="doc/edu/buffalo/fractal/FractalPanel.html#setIndexColorModel-java.awt.image.IndexColorModel-"
+         class="code">setIndexColorModel()</a>. This second method specifies the color scheme that is used to draw the
+         fractal. It takes in an instance of <a
+         href="https://docs.oracle.com/javase/7/docs/api/java/awt/image/IndexColorModel.html" class="code">IndexColorModel</a>
+         which defines a set of colors. For each entry in the array, the <span class="code">FractalPanel</span> uses the
+         escape time to find the color at that index in the <a
+         href="https://docs.oracle.com/javase/7/docs/api/java/awt/image/IndexColorModel.html" class="code">IndexColorModel</a>.
+         That color is used to draw that pixel.The <a href="doc/index.html">details of the <span class="code">FractalPanel</span>
+            class are documented here
+      </a>.
+      </p>
+      <p>Everyone has a different idea of what colors make the fractals most attractive. Rather than force my
+         (objectively better) design choices, each group must define 4 different color models for users to choose from.
+         To get you started you can (but do not have to) <a href="ColorModelFactory.java">use this class which has 3
+            methods which create color models</a>. Even with this, you will need to create a color model on your own. My
+         only request is that groups <span style="color: red; font-weight: bold; font-size: large;">do not create
+            color schemes that blind the user or give them a migraine</span>.
+      <p>We also need something which will let the user choose from the four fractal algorithms and four color
+         schemes should be used. <span class="highlight">Give your program <a
+            href="http://math.hws.edu/javanotes/c6/s7.html#GUI1.8.1">a menubar with <i>at least</i> 3 menus
+         </a>: File, Fractal, and Color.
+      </span> The File menu should contain an <span class="highlight">option to quit the program</span>, the Fractal menu
+         should contain <span class="highlight">menu items for each fractal</span>, and the Color menu should contain <span
+         class="highlight">menu items for each of your color schemes</span>. When the Exit item is selected, your
+         program should quit. When a fractal is selected, you should calculate the fractal and display it using the most
+         recently selected color scheme. When a color scheme is selected, you should set it so that fractals will be
+         displayed using this color scheme until a different choice is made or the program exits.
+      </p>
+      <p>Finally, the last phase relied on an escape distance of 2. <span class="highlight">Provide the user
+            with some method of changing to a new escape distance</span>. Your program must either prevent users from entering
+         an invalid escape distance OR show an error when the escape distance they enter is not a number greater then 0.
+         If the user provides an escape distance greater than 0, recalculate the last chosen fractal and have the <span
+         class="code">FractalPanel</span> display the recalculated escape times.
+      <p>Remember, <span style="text-align: center; color: maroon; font-weight: bold; font-size: x-large;">hours
+            of coding makes up for minutes of planning</span>.
+      </p>
+   </div>
+   <div class="section">
+      <a name="recitation"></a>
+      <h2 class="name">Recitation Activity for Week of Mar. 5 - Mar. 11</h2>
+      <p>The second week of the phase will not have a traditional recitation activity. Instead, students will have
+         nearly the full 110 minutes to work in their groups on this phase. During this time the TAs will be talking to
+         each group about their plans for this phase. In particular, <span class="highlight">each group will
+            explain how their program will handle the user providing a new escape distance</span>. While code is not required,
+         <span class="highlight">explanations should state what classes are involved and what variables/instance
+            variables will be used to call methods in that class. You do not need to show any code, but we want to see
+            you have planned out how this will be done. </span>. Grades for the recitation will be assigned using the following
+         rubric:
+      <table>
+         <tr>
+            <th>Score</th>
+            <th>Description</th>
+         </tr>
+         <tr>
+            <td>100</td>
+            <td style="text-align: left;">Includes all actions required when a user provides a new
+               escape distance;<br />Identifies class(es) performing these actions;<br />Specifies
+               variable, parameter, or instance variable used when calling method(s) in different class(es)
+            </td>
+         </tr>
+         <tr class="monday">
+            <td>90</td>
+            <td style="text-align: left;">Includes all actions required when a user provides a new
+               escape distance;<br />Identifies class(es) performing most of these actions;<br />Usually
+               specifies variable, parameter, or instance variable used when calling method(s) in different class(es).
+            </td>
+         </tr>
+         <tr class="monday">
+            <td>80</td>
+            <td style="text-align: left;">Includes majority of actions required when a user provides a
+               new escape distance;<br />Identifies class(es) performing these actions;<br />Specifies
+               variable, parameter, or instance variable used when calling method(s) in different class(es).
+            </td>
+         </tr>
+         <tr class="monday">
+            <td>70</td>
+            <td style="text-align: left;">Includes majority of actions required when a user provides a
+               new escape distance;<br />Identifies class(es) performing most of these actions;<br />Usually
+                specifies variable, parameter, or instance variable used when calling method(s) in different
+               class(es).
+            </td>
+         </tr>
+         <tr class="monday">
+            <td>60</td>
+            <td style="text-align: left;">Includes some actions required when a user provides a new
+               escape distance;<br />Identifies at least 1 class(es) performing actions;<br />Occasionally
+               specifies variable, parameter, or instance variable used when calling method(s) in different class(es).
+            </td>
+         </tr>
+         <tr class="monday">
+            <td>0</td>
+            <td style="text-align: left;">Does not describe what must happen when a user provides a new
+               escape distance;<br />Cannot state class(es) involved in executing this work;<br />Does not describe
+               variable, parameter, or instance variable used when calling method(s) in different class(es).
+            </td>
+         </tr>
+      </table>
+   </div>
+   <div class="section">
+      <a name="submit"></a>
+      <h2 class="name">How to Submit</h2>
+      <p>Phase #2 can only be submitted by the team member whose username comes first alphabetically. Submission by
+         other students will not be accepted nor can they be used to show that work was completed before the submission
+         deadline. We <b>strongly</b> encourage each team schedule a meeting which includes all members to do the
+         Web-CAT submission. <span class="highlight">Any students not included in the list of 
+            submission group members will receive a 0.</span>
+      </p>
+      <p>The project submission must contain the entire Eclipse project including the properly Javadoc'd source
+         code. This includes both the implementation code AND the JUnit test code.</p>
+   </div>
+   <div class="section">
+      <a name="rubric"></a>
+      <h2 class="name">Phase #2 Grading Rubric</h2>
+      <p>The team grades for phase #2 will use the following rubric:</p>
+      <ul>
+         <li>Each team must have a file named <span class="code">run.txt</span> which tells the TAs how to run your
+            program to verify you have a working GUI [1 point]
+         </li>
+         <li>Each team defines a GUI application that includes a <span class="code">FractalPanel</span> instance to
+            see the fractal images [2 points]
+         </li>
+         <li>Each team's program must include a menu bar with the required menus and menu items [2 points]</li>
+         <li>Each team's program exits the program when the exit menu item is selected [2 points]</li>
+
+         <li>Each team's program must display the appropriate fractal when its menu item is selected [4 * 4 = 16
+            points]</li>
+         <li>Once a color scheme is selected, the program uses that color scheme to display all fractals [4 * 4 =
+            16 points]</li>
+         <li>Each team include a file named <span class="code">update.txt</span> which tells the TAs how to update
+            the escape distance and verify invalid times are rejected/impossible. [1 points]
+         </li>
+         <li>Each team's program does not allow a user to enter an invalid escape distance or shows an error message
+            and rejects the invalid escape distance [2 points]</li>
+         <li>Each team's program accepts valid escape distance and recalculates and redraws the fractal when given a
+            new escape distance [4 points]</li>
+         <li>Once a new escape distance is entered, the program continues to use that time when generating other
+            fractals [2 points]</li>
+
+         <li>Each team must write JUnit tests showing that their project can: [50 points]
+            <ul>
+               <li>JUnit tests from phase #1 have been updated (where this is needed) so they continue to pass [26
+                  points]
+               <li>When the escape distance is set to 3, calculates the escape time for a coordinate whose distance
+                  from the origin exceeds the escape distance after a 10 passes of the loop [4 * 6 points = 24 points]
+                  <ul>
+                     <li>Mandelbrot Set: (0.46007827788650374, -0.3383561643835661)</li>
+                     <li>Julia Set: 1.4538160469667272, -0.13502935420743645)</li>
+                     <li>Burning Ship Set: (-1.6999999999999802, 0.0030136986301371603)</li>
+                     <li>Multibrot Set: (0.7025440313111545, -0.5520547945205528)</li>
+                  </ul>
+               </li>
+            </ul>
+         </li>
+         <li>All classes, methods, and instance variables are commented using Javadoc [2 points]</li>
+      </ul>
+   </div>
+</body>
+</html>

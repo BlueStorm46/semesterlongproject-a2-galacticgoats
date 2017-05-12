@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link type="text/css" rel="stylesheet"
+   href="http://www.cse.buffalo.edu/~mhertz/courses/cse116/stylesheet.php?page=header" />
+<link type="text/css" rel="stylesheet"
+   href="http://www.cse.buffalo.edu/~mhertz/courses/cse116/stylesheet.php?page=tables" />
+<link type="text/css" rel="stylesheet"
+   href="http://www.cse.buffalo.edu/~mhertz/courses/cse116/stylesheet.php?page=assign" />
+<link type="text/css" rel="stylesheet"
+   href="http://www.cse.buffalo.edu/~mhertz/courses/cse116/stylesheet.php?page=overview" />
+<title>Course Project Phase #3</title>
+</head>
+<body>
+   <div id="header">
+      <div id="classname">
+         <h1>CSE 116/504 - Spring 2017<br />Intro. to Computer Science for Majors II
+         </h1>
+      </div>
+   </div>
+   <div id="title">
+      <h1>Course Project Phase #3</h1>
+      <h3>Due: 11:59PM on April 15</h3>
+   </div>
+   <div class="section">
+      <p><span class="name">Menu</span></p>
+      <ul>
+         <li><a href="#objectives">Objectives</a></li>
+         <li><a href="#description">Description</a></li>
+         <li><a href="#submit">How To Submit</a></li>
+         <li><a href="#rubric">Grading Rubric</a></li>
+      </ul>
+   </div>
+   <div class="section">
+      <a name="objectives"></a>
+      <h2 class="name">Objectives</h2>
+      <h3>Phase Objectives</h3>
+      <ul>
+         <li>Students will add functionality to their group's existing codebase.</li>
+         <li>Students will experience working in iterative software lifecycles.</li>
+         <li>Students will manage source code using version control software</li>
+         <li>Students will develop software as a member of a small team.</li>
+         <li>Students will develop an event-driven application including a graphical user interface.</li>
+      </ul>
+   </div>
+   <div class="section">
+      <a name="description"></a>
+      <h2 class="name">Phase Description</h2>
+      <p>The third phase of the project gives you an opportunity to continue working with your codebase and
+         discovering the fun resulting from all those hard-coded constants. Well-designed, well-commented code should
+         make the needed changes easy; other code may learn what was meant by "<span
+         style="text-align: center; color: maroon; font-weight: bold; font-size: x-large;">hours of coding makes
+            up for minutes of planning</span>".
+      </p>
+      <p>This phase will have you update your program to provide users with three
+            additional options: <span class="highlight">selecting any maximum escape time between 1 and 255</span>; <span class="highlight">zoom in on a section of the
+            fractal</span>; and <span class="highlight">adding a button or menu item which resets the zoom level to the original coordinate range</span>.
+      </p>
+      <p>The biggest of these changes is that your program must <span class="highlight">allow users to click
+            and drag the cursor in the fractal and have your program automatically zoom in on this region of the fractal</span>.
+         You can <a href="http://math.hws.edu/javanotes5/c6/s4.html">read this tutorial</a> to learn how mouse events can
+         be handled within the GUI. While the cursor is being dragged through the screen, your program must provide some
+         sort of visual feedback for the region they are selecting. This feedback can be by drawing a selection box, but
+         could be updating a label to show the edge of the selected range or some other GUI-based approach. Once the
+         user finishes dragging the cursor, your program will need to recalculate the fractal. The recalculated fractal
+         should use the coordinate range the user selected, but use the same algorithm as before and still be sized 512
+         pixels by 512 pixels.
+      </p>
+      <p>A second change is that you need to provide the user with some way of having the system recalculate and
+         redisplay the fractal using the default coordinate range. When the user chooses your option, <span
+         class="highlight">only reset the zoom and NOT the algorithm or coloring</span>. You can use a button, menu
+         item, or some other GUI approach to have this reset work. Whatever approach you choose, make certain you create
+         a document named <span class="code">reset.txt</span>. Your <span class="code">reset.txt</span> document should
+         tell the TA what they should do to use your reset option.
+      </p>
+      <p>Finally, we are doing away with nearly all constants in our escape time algorithm (constants in the update
+         steps cannot change). <span class="highlight">Provide the user with methods to change both the maximum
+            escape time and escape distance</span>. However you choose to do this, make certain you create a document, named <span
+         class="code">update.txt</span> that includes instructions so the TAs can test changing the escape distance and
+         max. escape time. Your program must either prevent users from entering an invalid max escape time OR show an
+         error when the max escape time they enter is not an integer between 1 - 255. If the user provides a valid max
+         escape time greater than 0, recalculate the last chosen fractal and have the <span class="code">FractalPanel</span>
+         display the recalculated escape times.
+      </p>
+      <p>Remember, <span style="text-align: center; color: maroon; font-weight: bold; font-size: x-large;">hours
+            of coding makes up for minutes of planning</span>.
+      </p>
+   </div>
+   <div class="section">
+      <a name="submit"></a>
+      <h2 class="name">How to Submit</h2>
+      <p>Phase #3 should be submitted by the team member whose UBIT username comes first alphabetically. If that student is not available,
+      another student can submit the assignment.
+      We <b>strongly</b>
+         encourage each team schedule a meeting which includes all members to do the Web-CAT submission. <span
+         class="highlight">Any students not included in the list of submission group members will
+            receive a 0.</span>
+      </p>
+      <p>The project submission must contain the entire Eclipse project including the properly Javadoc'd source
+         code. This includes both the implementation code AND the JUnit test code.</p>
+   </div>
+   <div class="section">
+      <a name="rubric"></a>
+      <h2 class="name">Phase #3 Grading Rubric</h2>
+      <p>The team grades for phase #3 will use the following rubric:</p>
+      <ul>
+         <li>Each team's submission includes a file named <span class="code">run.txt</span> which tells the TAs how
+            to run your program to verify you have a working GUI [1 point]
+         </li>
+         <li>Each team defines a GUI application that includes a <span class="code">FractalPanel</span> instance to
+            see the fractals [2 points]
+         </li>
+         <li>Each team's program includes the required menu bar, menus, and menu items [2 points]</li>
+         <li>Each team's program correctly handles when the user selects one of the menu items [5 points]</li>
+         <li>Each team's program correctly generates all four of the fractals and creates all four of their color
+            schemes [5 points]</li>
+         <li>Each team's submission includes a file named <span class="code">reset.txt</span> which tells the TAs
+            how to reset the zoom so that the fractal is redrawn using the original coordinate range [1 point]
+         </li>
+         <li>Each team's submission includes a GUI-based approach to reset the zoom in a fractal [2 points]</li>
+         <li>Once zoom reset is selected, the fractal is redrawn using the original coordinate range [2 points]</li>
+         <li>Each team's submission includes a file named <span class="code">update.txt</span> which tells the TAs
+            how to update the escape distance and also tells the TA how to update the maximum escape time [1 point]
+         </li>
+         <li>Each team's submission includes a GUI-based approach to update the escape distance and to update the maximum escape
+            time [2 points]</li>
+         <li>Each team's program accepts valid escape distances and maximum escape times and recalculates and
+            redraws the fractal when the user specifies a new value [4 points]</li>
+         <li>Once a new escape distance is entered and once a new maximum escape time is entered, the program
+            continues to use that value when calculating fractals [2 points]</li>
+         <li>Each team's submission allows users to select a portion of a fractal to zoom in on [4 points]</li>
+         <li>While a user is dragging the mouse to select the region of the fractal on which to zoom in, the program provides some visual feedback for their actions [5 points]</li>
+         <li>Once a region is selected, the program recalculates and redisplays a 512-by-512 fractal only showing the selected coordinates [10 points]</li> 
+         <li>Each team must write JUnit tests showing that their project can: [50 points]
+            <ul>
+               <li>JUnit tests from phases #1 and 2 have been updated (where this is needed) so they continue to pass [26
+                  points]</li>
+               <li>When the maximum escape time is set to 135 and the escape distance is set to 2, calculates the escape time for a coordinate whose distance from the origin never exceeds the escape distance [4 * 6 points = 24 points]
+               <ul>
+                     <li>Mandelbrot Set: (0.3207031250000001, -0.07109374999999386)</li>
+                     <li>Julia Set: (1.0492187499999897, -0.234375)</li>
+                     <li>Burning Ship Set: (-1.7443359374999874, -0.017451171875000338)</li>
+                     <li>Multibrot Set: (0.5859375, 0.24375000000000108)</li>
+                  </ul> 
+               </li>
+            </ul>
+         </li>
+         <li>All classes, methods, and instance variables are commented using Javadoc [2 points]</li>
+      </ul>
+   </div>
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link type="text/css" rel="stylesheet"
+   href="http://www.cse.buffalo.edu/~mhertz/courses/cse116/stylesheet.php?page=header" />
+<link type="text/css" rel="stylesheet"
+   href="http://www.cse.buffalo.edu/~mhertz/courses/cse116/stylesheet.php?page=tables" />
+<link type="text/css" rel="stylesheet"
+   href="http://www.cse.buffalo.edu/~mhertz/courses/cse116/stylesheet.php?page=assign" />
+<link type="text/css" rel="stylesheet"
+   href="http://www.cse.buffalo.edu/~mhertz/courses/cse116/stylesheet.php?page=overview" />
+<title>Course Project Phase #4</title>
+</head>
+<body>
+   <div id="header">
+      <div id="classname">
+         <h1>CSE 116/504 - Spring 2017<br />Intro. to Computer Science for Majors II
+         </h1>
+      </div>
+   </div>
+   <div id="title">
+      <h1>Course Project Phase #4</h1>
+      <h3>Due: 11:59PM on May 13</h3>
+   </div>
+   <div class="section">
+      <p><span class="name">Menu</span></p>
+      <ul>
+         <li><a href="#objectives">Objectives</a></li>
+         <li><a href="#description">Description</a></li>
+                  <li><a href="#recitation"><span style="color: red">Recitation Activity for Week of April. 24 -
+                  Apr. 29</span></a></li>
+         <li><a href="#submit">How To Submit</a></li>
+         <li><a href="#rubric">Grading Rubric</a></li>
+      </ul>
+   </div>
+   <div class="section">
+      <a name="objectives"></a>
+      <h2 class="name">Objectives</h2>
+      <h3>Phase Objectives</h3>
+      <ul>
+         <li>Students will add functionality to their group's existing codebase.</li>
+         <li>Students will experience working in iterative software lifecycles.</li>
+         <li>Students will manage source code using version control software</li>
+         <li>Students will develop software as a member of a small team.</li>
+         <li>Students will develop an event-driven application including a graphical user interface.</li>
+      </ul>
+   </div>
+   <div class="section">
+      <a name="description"></a>
+      <h2 class="name">Phase Description</h2>
+      <p>The final phase of the project gives you an opportunity to continue working with your codebase and
+         discovering the fun of hard-coded constants. In addition, this phase will give you an opportunity to learn how software
+         can split work into multiple independent tasks (multi-threading) which allows it to use all of a processor's cores and complete the job faster. 
+         Well-designed, well-commented code should make it easy to make these changes; others may continue learning what was meant by "<span
+         style="text-align: center; color: maroon; font-weight: bold; font-size: x-large;"><a href="http://bit.ly/2oBWu3I">hours of coding makes
+            up for minutes of planning</a></span>".
+      </p>
+      <p>This phase will have you update your program in four different ways: <span class="highlight">update your code so that it calculates and display fractals that are 2048 x 2048 pixels</span> (for this to display correctly, you must also you set the <span class="code">FractalPanel</span> instance's size to 2048 x 2048);
+      <span class="highlight">adding a button or menu item which allows the user to specify the <a href="https://software.intel.com/sites/default/files/m/8/6/f/4/8/21866-Multi-core_Programming_Basic_Concepts.ppt">number of threads</a> used to calculate the fractal</span>;  and
+      <span class="highlight">use the <span class="code">ComputePool</span> class I provide to enable calculating the fractal in parallel</span>.
+      </p>
+      <p>The biggest of these changes is that your program will need to make changes so that <span class="highlight">it can use multiple threads
+      to calculate each fractal</span>. Getting multithreading details correct, especially in Swing, is incredibly difficult. Your project must
+      use the <span class="code">ComputePool</span> (and the related <span class="code">WorkerResult</span> class) which will take care of these details.
+      You should <a href="FractalThreading.jar">download the JAR file containing these classes</a> and add this to your project. The <span class="code">ComputePool</span> includes 3 methods that you may want to use:</p>
+      <ul>
+      <li><span class="code" style="color: blue;">changePanel(FractalPanel fp)</span> -- specifies the instance of <span class="code">FractalPanel</span> that will be updated whenever
+      a fractal finished being generated</li>
+            <li><span class="code" style="color: blue;">clearPool()</span> -- cancels any on-going calculates and resets the <span class="code">ComputePool</span>'s state so that it is ready to calculate a new fractal</li>
+            <li><span class="code" style="color: blue;">generateFractal(int rows, SwingWorker&lt;WorkerResult, Void&gt;[] instances)</span> -- starts the process of calculating a fractal which will have the specified number of rows and
+            will be generated by the objects in the array. For this to work, the <span class="code">SwingWorker</span> instances <span style="font-weight: bold;">must</span> be newly allocated and have started executing.</li>
+      </ul>
+      <p>For this to work with your code, you will need to provide it with a subclass of <span class="code">SwingWorker</span>. This is a class that Java designed to allow work to occur in the
+      background, but then have the results made available safely inside a Swing application. To do this, the <span class="code">SwingWorker</span> subclass does all of its processing in a overriden <span class="code">doInBackground()</span> method and returns the final result.
+      Whether you want to create a new subclass or make one of your existing classes a subclass of <span class="code">SwingWorker</span> is up to your group to decide. Your program will need to pass an array with an instance of your <span class="code">SwingWorker</span>
+      for each thread. Calculating results should be split as equally as possible along the rows of the fractal. Each <span class="code">SwingWorker</span> instance will need to calculate the escape times for all of the pixels in the range of rows it is assigned.
+      Once this is complete, it will need to return a <span class="code">WorkerResult</span> instance with its results. The <span class="code">ComputePool</span> instance automatically detects when each worker finishes and will update the fractal once all of the work is done.</p> 
+      <p>A second change takes advantage of the increase in fractal generation speed that this parallelism provides. The final remaining constant in our escape time algorithm --
+      the size of the fractal -- is changing. With this phase, <span class="highlight">your program should calculate a 2048 x 2048 pixel fractal. To take advantage of this increased detail, you should also
+      set the <span class="code">FractalPanel</span> instance's size to 2048 x 2048</span>.
+      </p>
+      <p>Finally, the optimal number of threads depends on a huge number of factors. There are not any easy ways to find and update this number,
+      so we will not even try. Instead, <span class="highlight">provide the user with some way of entering how many <span class="code">SwingWorker</span> instances should
+      be used generating fractals in the future</span>. However you choose to do this, 
+      create a document, named <span
+         class="code">workers.txt</span> that explains how the TAs can test changing the number of <span class="code">SwingWorker</span> instances
+         used to calculate fractals moving forward. Your program must either prevent users from 
+         entering an invalid number of <span class="code">SwingWorker</span> instances  OR show an
+         error when the number they enter is not an integer between 1 - 128. If the user provides a valid number
+         greater than 0, make certain that all future calculations would use that number (unless this value is changed again).</p>
+      <p>
+      <p><span style="text-align: center; color: maroon; font-weight: bold; font-size: x-large;">Optional (ungraded) challenges:</span> The FractalPanel class
+      includes a method which allows you to save the current image to a file. While not worth any points, you could add a &quot;Save as...&quot; menu item to the File menu and save the images you find.
+      Another interesting idea would be to add an &quot;easter egg&quot; for the TAs and I to find. These can be a lot of fun and a great way of advertising your programming skill to the world at large.
+      </p>
+   </div>
+   <div class="section">
+      <a name="recitation"></a>
+      <h2 class="name">Recitation Activity for Week of Apr. 24 - Apr. 29</h2>
+      <p>The second week of the phase will not have a traditional recitation activity. Instead, students will have
+         nearly the full 110 minutes to work in their groups on this phase. During this time the TAs will be talking to
+         each group about their plans for this phase. In particular, <span class="highlight">each group will
+            explain how their program will implement having the fractal generated by a number of instances that the user previously specified</span>. While code is not required,
+         <span class="highlight">explanations should include what classes are involved, how the number of instances will be specified, 
+         how each instance will know which rows it is calculating, and how the escape times are calculated.
+          You do not need to show any code, but we want to see
+            you have planned out how this will be done</span>. Grades for the recitation will be assigned using the following
+         rubric:
+      <table>
+         <tr>
+            <th>Score</th>
+            <th>Description</th>
+         </tr>
+         <tr>
+            <td>100</td>
+            <td style="text-align: left;">Explains exactly how the instances will divide the work to calculate fractals in parallel;<br />
+               Identifies class(es) calculating the escape times;<br />Specifies
+               variable, parameter, or instance variable used by instances to determine the rows to generate and escape times within each row
+            </td>
+         </tr>
+         <tr class="monday">
+            <td>90</td>
+            <td style="text-align: left;">Explains exactly how the instances will divide the work to calculate fractals in parallel;<br />
+               Identifies class(es) calculating the escape times;<br />Usually specifies
+               variable, parameter, or instance variable used by instances to determine the rows to generate and escape times within each row
+            </td>
+         </tr>
+         <tr class="monday">
+            <td>80</td>
+            <td style="text-align: left;">Explains most details for how the instances will divide the work to calculate fractals in parallel;<br />
+               Identifies class(es) calculating the escape times;<br />Specifies
+               variable, parameter, or instance variable used by instances to determine the rows to generate and escape times within each row
+            </td>
+         </tr>
+         <tr class="monday">
+            <td>70</td>
+            <td style="text-align: left;">Explains most details for how the instances will divide the work to calculate fractals in parallel;<br />
+               Identifies class(es) calculating the escape times;<br />Usually specifies
+               variable, parameter, or instance variable used by instances to determine the rows to generate and escape times within each row
+               class(es).
+            </td>
+         </tr>
+         <tr class="monday">
+            <td>60</td>
+            <td style="text-align: left;">Explains some details for how the instances will divide the work to calculate fractals in parallel;<br />
+               Identifies some of the class(es) calculating the escape times;<br />Occasionally
+               variable, parameter, or instance variable used by instances to determine the rows to generate and escape times within each row
+            </td>
+         </tr>
+         <tr class="monday">
+            <td>0</td>
+            <td style="text-align: left;">Does not describe how the instances will divide the work to calculate fractals in parallel;<br />
+            Cannot state class(es) calculating the escape times;<br />Does not describe
+               variable, parameter, or instance variable used by instances to determine the rows to generate and escape times within each row
+            </td>
+         </tr>
+      </table>
+   </div>
+   <div class="section">
+      <a name="submit"></a>
+      <h2 class="name">How to Submit</h2>
+      <p>Phase #4 should be submitted by the team member whose UBIT username comes first alphabetically. If that student is not available,
+      another student can submit the assignment.
+      We <b>strongly</b>
+         encourage each team schedule a meeting which includes all members to do the Web-CAT submission. <span
+         class="highlight">Any students not included in the list of submission group members will
+            receive a 0.</span>
+      </p>
+      <p>The project submission must contain the entire Eclipse project including the properly Javadoc'd source
+         code. This includes both the implementation code AND the JUnit test code.</p>
+   </div>
+   <div class="section">
+      <a name="rubric"></a>
+      <h2 class="name">Phase #4 Grading Rubric</h2>
+      <p>The team grades for phase #4 will use the following rubric:</p>
+      <ul>
+         <li>Each team's submission includes a file named <span class="code">run.txt</span> which tells the TAs how
+            to run your program to verify you have a working GUI [1 point]
+         </li>
+         <li>Each team defines a GUI application that includes a <span class="code">FractalPanel</span> instance to
+            see the fractals [2 points]
+         </li>
+         <li>Each team's program includes the required menu bar, menus, and menu items [2 points]</li>
+         <li>Each team's program correctly handles when the user selects one of the menu items [5 points]</li>
+         <li>Each team's program correctly generates all four of the fractals, creates all four of their color
+            schemes, and allows unlimited zooming [10 points]</li>
+         <li>Each team's submission includes a file named <span class="code">size.txt</span> which tells the TAs
+            which classes &amp; methods they should check to verify that the program generates a 2048 x 2048 pixel fractal [1 point]</li>
+         <li>Each team's submission generates and displays fractals sized 2048 x 2048 pixels [19 points]
+         </li>
+         <li>Each team's submission includes a file named <span class="code">threads.txt</span> which tells the TAs
+            how to change the number of threads used to generate the fractal and the classes &amp; methods they should check to verify the code uses this number of threads [1 point]
+         </li>
+         <li>Each team's submission uses the <span class="code">ComputePool</span> class to parallelize the fractal calculations [20 points]</li>
+         <li>Each team's program accepts valid numbers of threads and uses the most recently entered value when calculating a fractal [15 points]</li>
+         <li>Each team's program either does not allow for an invalid number of threads to be entered or displays an error message when an invalid number of threads is entered [4 points]</li>
+         <li>Each teams JUnit tests from phases #1, 2 and 3 have been updated (as needed) and continue to pass when 4 threads are used to generate the image [18 points]</li>
+         <li>All classes, methods, and instance variables are commented using Javadoc [2 points]</li>
+      </ul>
+   </div>
+</body>
+</html>

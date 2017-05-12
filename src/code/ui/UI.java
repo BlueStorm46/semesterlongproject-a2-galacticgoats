@@ -1,5 +1,6 @@
 package code.ui;
 
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -28,11 +29,12 @@ public class UI {
 	JLabel label;
 
 	/** Global Variables */
-	public double escapeDistance = 2; // Default Escape Distance: 2
-	public int escapeTime = 255; // Default Escape Time: 255
-	public int threads = 1; // Default Threads: 1
-	int currentFractal = 1; // Default Fractal: Mandelbrot
-	public double x_min, x_max, y_min, y_max;
+	double escapeDistance = 2; 					// Default Escape Distance: 2
+	int escapeTime = 255; 						// Default Escape Time: 255
+	int threads = 1; 							// Default Threads: 1
+	int currentFractal = 1; 					// Default Fractal: Mandelbrot
+	int size = 2048;							// Default Size: 2048x2048
+	double x_min, x_max, y_min, y_max;
 
 	public UI() {
 		createPanel();
@@ -126,18 +128,20 @@ public class UI {
 
 		/** Finish Creating GUI */
 		label = new JLabel();
-		label.setText("\u2191 Select a Fractal to Begin    ");
-		label.setFont(new Font("Serif", Font.PLAIN, 30));
+		label.setText("\u2191 Select a Fractal to Begin                                                                                                ");
+		label.setFont(new Font("Serif", Font.PLAIN, 50));
 		label.setVerticalAlignment(JLabel.TOP);
 		label.setHorizontalAlignment(JLabel.CENTER);
 		frame.add(label);
 
 		frame.setJMenuBar(menuBar);
-		frame.setSize(512, 512);
+		Dimension d = new Dimension(size, size);
+		frame.setSize(d);
+		fp.setSize(d);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
-
+	
 		/** Sets Default Fractal Properties */
 		resetZoom();
 		updateColor(1);
@@ -272,8 +276,8 @@ public class UI {
 		}
 
 		public void mouseReleased(MouseEvent e) {
-			double x_range = (x_max - x_min) / 512;
-			double y_range = (y_max - y_min) / 512;
+			double x_range = (x_max - x_min) / size;
+			double y_range = (y_max - y_min) / size;
 			x_min = x_min + (startDrag.x * x_range);
 			x_max = x_min + (endDrag.x * x_range);
 			y_min = y_min + (startDrag.y * y_range);

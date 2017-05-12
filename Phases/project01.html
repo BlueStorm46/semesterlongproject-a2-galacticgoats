@@ -1,0 +1,392 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link type="text/css" rel="stylesheet"
+   href="http://www.cse.buffalo.edu/~mhertz/courses/cse116/stylesheet.php?page=header" />
+<link type="text/css" rel="stylesheet"
+   href="http://www.cse.buffalo.edu/~mhertz/courses/cse116/stylesheet.php?page=tables" />
+<link type="text/css" rel="stylesheet"
+   href="http://www.cse.buffalo.edu/~mhertz/courses/cse116/stylesheet.php?page=assign" />
+<link type="text/css" rel="stylesheet"
+   href="http://www.cse.buffalo.edu/~mhertz/courses/cse116/stylesheet.php?page=overview" />
+<title>Course Project Phase #1</title>
+</head>
+<body>
+   <div id="header">
+      <div id="classname">
+         <h1>CSE 116/504 - Spring 2017<br />Intro. to Computer Science for Majors II
+         </h1>
+      </div>
+   </div>
+   <div id="title">
+      <h1>Course Project Phase #1</h1>
+      <h3>Due: 11:59PM on February 25</h3>
+   </div>
+   <div class="section">
+      <p><span class="name">Menu</span></p>
+      <ul>
+         <li><a href="#objectives">Objectives</a></li>
+         <li><a href="#description">Description</a></li>
+         <li><a href="#cloning">Creating the repository</a></li>
+         <li><a href="#rules">Escape-time Algorithms</a></li>
+         <li><a href="#requirements">Phase #1 Requirements</a></li>
+         <li><a href="#teams">Teamwork Guidelines</a></li>
+         <li><a href="#submit">How to Submit</a></li>
+         <li><a href="#rubric">Grading Rubric</a></li>
+      </ul>
+   </div>
+   <div class="section">
+      <a name="objectives"></a>
+      <h2 class="name">Objectives</h2>
+      <h3>Project Objectives</h3>
+      <ul>
+         <li>Students gain experience working on a team <i>developing a software project</i> using <i>agile</i>
+            techniques including test-driven development, pair programming, and iterative lifecycles.</li>
+         <li>Students will gain experience designing, developing, and working in a moderately large software code
+            base</li>
+      </ul>
+
+      <h3>Phase Objectives</h3>
+      <ul>
+         <li>Students will develop a comprehensive suite of unit tests.</li>
+         <li>Students will experience starting a project which uses an iterative software lifecycle.</li>
+         <lI>Students will manage documents using version control software (git).</li>
+         <lI>Students will develop software as a member of a small team.</li>
+      </ul>
+   </div>
+   <div class="section">
+      <a name="description"></a>
+      <h2 class="name">Project Description</h2>
+      <p>We all like pretty pictures. They are attractive and shiny and let you show off.
+         Fractals are doubly cool: not only do fractals make pretty pictures, but they are pretty pictures that let you show off your
+         programming skills. As an added bonus, there is <a
+         href="https://web.archive.org/web/20101227125633/http://www.jonathancoulton.com/mp3/Mandelbrot%20Set.mp3">geeky,
+            but kinda cool, music</a> about them. As a <a href="http://www.threadbombing.com/data/media/31/OMFG.jpg">gentle
+            introduction</a> to real-world programming practices, this term has you developing a program that can generate,
+         display, and save fractals images. By the end of the term, your
+         programs will be able to produce images like these:
+      </p> <img alt="Pretty picture of the Mandelbrot set" src="mandelbrot.png" /> <img
+         alt="Pretty picture of the Julia set" src="julia.png" /> <img
+         alt="Hertz's favorite picture, but why are you reading this?" src="burning_ship.png" />
+         <img
+         alt="Really, I want to know -- why are you reading this?" src="multibrot.png" />
+      <p>To reflect real-world practices, the project is broken up into 4 three-week-long phases (called <a
+         href="http://scrummethodology.com/scrum-sprint/">&quot;sprints&quot;</a> in agile development). When this first
+         phase ends, your team will have developed a comprehensive set of unit tests validating you can correctly calculate the fractals and the code doing the calculation.
+         Future phases have your team creating and then refining a GUI application which displays and
+         manipulates these fractals. While work is due at the end of each phase, you should remember that the project
+         continues until the end of the term. Writing code that works only for the current phase may be quicker in the
+         short-term, a little planning and design will be much faster in the end. As is often said: <span
+         style="text-align: center; text-shadow: gray; color: red; font-weight: bold; font-size: x-large;"> Hours
+            of coding makes up for minutes of planning</span>.
+      </p>
+   </div>
+      <div class="section">
+      <a name="cloning"></a>
+      <h2 class="name">Creating the repository</h2>
+      <p>Your team will need to use a github repository to share code. In addition to giving you experience with common
+      real-world team development tools, the projects will be linked in the CSE116 classroom. This enables the course staff
+      (e.g., instructors &amp; TAs) to help teams resolve problems as they occur. These instructions are available as
+      a pinned announcement in the course Piazza site or <a href="github_instructions.html">on this page</a>.</p>
+   </div>
+   <div class="section">
+      <a name="rules"></a>
+      <h2 class="name">Escape-Time Algorithms</h2>
+      <p>The fractals your program will be generating this term are all &quot;escape-time algorithms&quot;.
+         Escape-time algorithms imagine the picture is a Cartesian plane (I had to look this up, too -- it means point
+         is defined by its x- and y-coordinates). Each <span class="highlight">PIXEL</span> (point on this plane) is
+         then colored using the following process:
+      </p>
+      <pre>
+      Set <span class="variable">xCalc</span> = current point's x-coordinate
+      Set <span class="variable">yCalc</span> = current point's y-coordinate
+      Set <span class="variable">dist</span> = distance from the point (<span class="variable">xCalc</span>, <span
+            class="variable">yCalc</span>) to (0,0) using the Pythagorean theorem
+      Set <span class="variable">passes</span> = 0
+      While <span class="variable">dist</span> &le; 2 and <span class="variable">passes</span> &lt; 255 do
+        Update <span class="variable">xCalc</span> and <span class="variable">yCalc</span> using the update function defined for the fractal being generated
+        Increase <span class="variable">passes</span> by 1
+        Set <span class="variable">dist</span> = distance from the point (<span class="variable">xCalc</span>, <span
+            class="variable">yCalc</span>) to (0,0) using the Pythagorean theorem
+      EndWhile
+      Set the current point's escape-time equal to <span class="variable">passes</span>
+      </pre>
+      <p>Note that there is nothing special about the numbers 2 and 255 in the above algorithm; any positive numbers
+         could instead be used. The number 2 is the &quot;escape distance&quot; (the distance above which we expect the
+         series will eventually reach infinity) and the number 255 determines the maximum number of steps that will be
+         considered. Replacing these with other numbers does not change the fractal definition, just how it is visualized. Future phases may
+         (or may not) change what these values will be.</p>
+      <p>The range of x- and y-coordinates to use is specific to each fractal. These ranges are stated below (just after the fractal's update function).
+         They are not important, but were selected because
+         they make for pretty pictures. It is also possible that these could be changed.
+         For this first phase, you will need to
+         split the ranges into 512 equally-spaced rows and 512 equally-spaced columns. To generate the entire fractal, you simply calculate
+         the escape-time for each of these 262144 coordinate pairs. (The number 262144 is equal to 512 * 512 or the number of
+         row &amp; column combination). The final fractal results should be returned as a 2-d array on <span
+         class="code">int</span>.
+      </p>
+      <p>Details on the fractals you will be calculating:</p>
+      <dl>
+         <dt><span class="highlight">Mandelbrot Set</span></dt>
+         <dd><span class="variable">x'</span> = <span class="variable">x</span>&sup2; - <span class="variable">y</span>&sup2;
+            + current point's x-coordinate<br /> <span class="variable">y'</span> = 2 * <span class="variable">x</span>
+            * <span class="variable">y</span> + current point's y-coordinate<br />&nbsp;&nbsp;&nbsp;where <span class="variable">x</span>
+            and <span class="variable">y</span> are the values of <span class="variable">xCalc</span> and <span
+            class="variable">yCalc</span> prior to this update and <span class="variable">x'</span> and <span
+            class="variable">y'</span> are their values after the update.<br /> X-coordinate range from -2.15 to 0.6<br />
+            Y-coordinate range from -1.3 to 1.3</dd>
+         <dt><span class="highlight">Julia Set</span></dt>
+         <dd><span class="variable">x'</span> = <span class="variable">x</span>&sup2; - <span class="variable">y</span>&sup2;
+            + -0.72689<br /> <span class="variable">y'</span> = 2 * <span class="variable">x</span> * <span
+            class="variable">y</span> + 0.188887<br />&nbsp;&nbsp;&nbsp;where <span class="variable">x</span> and <span class="variable">y</span>
+            are the values of <span class="variable">xCalc</span> and <span class="variable">yCalc</span> prior to this
+            update and <span class="variable">x'</span> and <span class="variable">y'</span> are their values after the
+            update.<br /> X-coordinate range from -1.7 to 1.7<br /> Y-coordinate range from -1.0 to 1.0</dd>
+         <dt><span class="highlight">Burning Ship Set</span></dt>
+         <dd><span class="variable">x'</span> = <span class="variable">x</span>&sup2; - <span class="variable">y</span>&sup2;
+            + current point's x-coordinate<br /> <span class="variable">y'</span> = <span class="code">Math.abs(</span>2
+            * <span class="variable">x</span> * <span class="variable">y</span><span class="code">)</span> + current
+            point's y-coordinate<br />&nbsp;&nbsp;&nbsp;where <span class="variable">x</span> and <span class="variable">y</span> are
+            the values of <span class="variable">xCalc</span> and <span class="variable">yCalc</span> prior to this
+            update and <span class="variable">x'</span> and <span class="variable">y'</span> are their values after the
+            update.<br /> X-coordinate range from -1.8 to -1.7<br /> Y-coordinate range from -0.08 to 0.025</dd>
+         <dt><span class="highlight">Multibrot set</span></dt>
+         <dd><span class="variable">x'</span> = <span class="variable">x</span>&sup3; - (3 * <span class="variable">x</span> * <span class="variable">y</span>&sup2;)
+            + current point's x-coordinate<br /> <span class="variable">y'</span> = (3 * <span class="variable">x</span>&sup2;
+            * <span class="variable">y</span>) - <span class="variable">y</span>&sup3; + current point's y-coordinate<br />&nbsp;&nbsp;&nbsp;where <span class="variable">x</span>
+            and <span class="variable">y</span> are the values of <span class="variable">xCalc</span> and <span
+            class="variable">yCalc</span> prior to this update and <span class="variable">x'</span> and <span
+            class="variable">y'</span> are their values after the update.<br /> X-coordinate range from -1 to 1<br />
+            Y-coordinate range from -1.3 to 1.3</dd>
+      </dl>
+   </div>
+   <div class="section">
+      <a name="requirements"></a>
+      <h2 class="name">Phase #1 Requirements</h2>
+      <p><b>It is important that each group follow these requirements.</b> In keeping with an iterative development
+         model, this first phase is limited to calculating the escape-times for each fractal. Future phases will add
+         features. Some of these features may require modifying assumptions from this phase. While good designs will easily adapt to these changes,
+         groups that do not spend time and thinking through their project's design will find that
+         future phases require major rewrites. Remember: <span style="text-shadow: gray; color: maroon; font-weight: bold;">hours
+            of coding makes up for minutes of planning</span>.
+      <p><span style="text-align: center; text-shadow: gray; color: red; font-weight: bold; font-size: xx-large;">You
+            must ABSOLUTELY NOT create ANY KIND of user interface for phase 1.</span> Since the fractal generation code is
+         critical for future phases, this phase focuses on developing (and passing) a solid set of JUnit test cases
+         which verify your fractal generation code works. The JUnit tests listed in the <a href="#rubric">phase
+            grading rubric</a> are the minimum set of test cases you should be writing.</p>
+
+      <h3>Test-Driven Development</h3>
+      <p>In proper test-driven development, JUnit tests are <a
+         href="http://agilemodeling.com/essays/executableSpecifications.htm">executable specifications</a> and are written <i>prior</i>
+         to the implementation code. While this can be difficult at first, practice helps TDD become
+         second nature AND helps you write better code AND reduces the total programming time needed.
+         Plus, would you rather struggle now or in your first job or internship?
+      </p>
+      <p>To &quot;help&quot; you get this practice, course staff will only review JUnit tests and the code executed
+         by the JUnit. <b>NO EXCEPTIONS WILL BE MADE</b>.
+      </p>
+
+      <h3>Collective Ownership</h3>
+      <p>Most organizations using agile development also practice <a
+         href="https://www.agilealliance.org/glossary/collective-ownership/">Collective Ownership</a>. This concept
+         means that the ENTIRE team has the right to change any document, but also that the ENTIRE team is responsible
+         for EVERY mistake.
+      </p>
+      <p>To give you practice with this concept, each team is required to <span class="highlight">create and
+            use a Git repository for their project on github</span>. Recitation TAs will help you start this process, but you
+         can refer back to these tutorials:
+      </p>
+      <ul>
+         <li><a
+            href="https://stackoverflow.com/questions/6760115/importing-a-github-project-into-eclipse/19065354#19065354">Importing
+               a github repository into Eclipse</a></li>
+         <li><a href="http://eclipsesource.com/blogs/tutorials/egit-tutorial/">Starting with EGit in Eclipse</a></li>
+         <li><a href="http://www.vogella.com/tutorials/EclipseGit/article.html">Git version control with
+               Eclipse (EGit)</a></li>
+      </ul>
+
+      <h3>Code Standards</h3>
+      <p>Every programmer has their preferred way to format code and <a
+         href="https://blog.codinghorror.com/death-to-the-space-infidels/">believes it to be superior to all others</a>.
+         Every programmer is wrong (except me). To avoid fights, companies and open-source projects set specific
+         standards that must be followed. For this project, your team's code MUST meet the following standards:
+      <dl>
+         <dt>Package naming</dt>
+         <dd>None of your classes may be in the default package. You must at least one package for your code (named
+            <tt>code</tt> ) and another package for your JUnit tests (named <tt>tests</tt> ). You <i>should</i> use
+            sub-packages within these packages to help you organize your code. If it helps structure your program, you
+            can create even more packages.
+         </dd>
+
+         <dt><a href="https://blog.codinghorror.com/if-it-isnt-documented-it-doesnt-exist/">Code Comments</a></dt>
+         <dd>All classes, methods, and fields in your implementation (non-JUnit test) code needs to be documented
+            using Javadoc. See the <a href="http://java.sun.com/javase/6/docs/technotes/guides/javadoc/index.html">Javadoc
+               Technology page</a> for more information. In particular, consider reviewing <a
+            href="http://java.sun.com/j2se/javadoc/writingdoccomments/index.html">this page on how to write comments
+               in Javadoc</a>.
+         </dd>
+      </dl>
+
+      <h3>Communication and Documentation</h3>
+      <p><a href="https://hbr.org/2012/04/the-new-science-of-building-great-teams">Communication quality is the
+            best predictor</a> of whether a project will succeed or fail. This includes communication:</p>
+      <ul>
+         <li>between the development team and the customer (your team should use Piazza to ask the TAs and I
+            questions you have)</li>
+         <li>between team members about their plans (this should be done in the meeting minutes stored in the
+            team's github repository)</li>
+         <li>between developers about what each method must do (JUnit tests accomplish this)</li>
+      </ul>
+      Your TAs and the instructor can help answer questions you have about how to use Piazza and Git.
+
+      <h3>Pair Programming</h3>
+      <p><a href="https://www.scrumalliance.org/community/articles/2012/july/doing-agile-with-pairing">Pair
+            programming</a> is a core tenet of agile software development. The Agile Alliance even <a
+         href="http://guide.agilealliance.org/guide/pairing.html">includes a section</a> with suggestions for how to
+         improve your pair programming skills. For those looking for even more help, YouTube also has some excellent
+         videos:
+      <ul>
+         <li><a href="https://www.youtube.com/watch?v=ET3Q6zNK3Io">Agile in Practice: Pair Programming</a></li>
+         <li><a href="https://www.youtube.com/watch?v=rG_U12uqRhE">Introduction to Pair Programming, version 2</a></li>
+      </ul>
+      To demonstrate how important pair programming is, <a href="https://www.youtube.com/watch?v=x6MnEZlW7pU">some
+         companies include pair programming in job interviews</a>.
+   </div>
+   <div class="section">
+      <a name="teams"></a>
+      <h2 class="name">Teamwork guidelines</h2>
+      <p>It is important that there is a roughly equal division of labor amongst teammates. It is completely
+         unacceptable for one person to do most of the work. At the end of each phase, points will be split up between
+         teammates based upon how much of the work they were reported to have done. It is therefore important for each
+         person to do their fair share.</p>
+      <p>If you are having trouble with an unmotivated group member you should seek to solve the problem at the
+         group level first. If this does not work, you must seek the aid of your recitation TA. If this does not work,
+         your recitation TA can have you talk to the course instructor.</p>
+
+      <h3>Meeting Minutes</h3>
+
+      <p>Never attend a meeting that does not have an agenda. <a
+         href="http://randsinrepose.com/archives/how-to-run-a-meeting/">It will only waste your time</a>. A meeting that
+         does not have minutes is also a waste; any decisions will be forgotten.
+      </p>
+      <p>Your team MUST meet during your recitation section. This meeting will occur after the TAs presentation and
+         should plan out your next week's work. To make certain this time is not wasted, you MUST use the following
+         template to record minutes from each meeting. (This format also doubles as the agenda for your next meeting).
+         You can find a template in your group's <span class="code">MeetingMinutes</span> folder in the repository. You
+         may organize your minutes in this folder in whatever way works best for your group. Taking minutes requires
+         effort and this should be considered when balancing workloads among members.
+      </p>
+      <p>Meeting Minutes for _______________:</p>
+      <ul>
+         <li>Meeting Attendance: <i>(list all students who were present)</i> [1 minute]
+            <ul>
+               <li><i>Put an 'M' next to the name of the student taking minutes</i></li>
+            </ul></li>
+         <li>Tasks completed since last meeting [1-2 minutes]
+            <ul>
+               <li>List the tasks that were completed in the last week</li>
+               <li>Some weeks, including the first week your group meets, this will be blank</li>
+            </ul>
+         </li>
+         <li>Tasks worked upon but not completed since last meeting [2-4 minutes]
+            <ul>
+               <li>List each of these tasks</li>
+               <li>Significant discussions of ideas or actions to make progress on these should be
+                  documented</li>
+               <li>Some weeks, including the first week your group meets, this will be blank</li>
+            </ul>
+         </li>
+         <li>Goals for the next meeting [20+ minutes]
+            <ul>
+               <li>Choose which of the remaining tasks will be worked upon in the coming week.</li>
+               <li>Discuss what is needed to complete each of the tasks.</li>
+               <li>Large tasks will need to be broken up. Where this is appropriate, setup sub-goals
+               to document you are making process on a task. Document these changes in your repository.</li>
+            </ul>
+         </li>
+         <li>Schedule for the next week's set of pair programming meetings [3-4 minutes]
+            <ul>
+               <li>Pair programming sessions should be two hours long (no more, no less)</li>
+               <li>Every team member should participate in two sessions each week, with each session including a
+                  different team member</li>
+               <li>Identify the user story to be worked on in each session</li>
+            </ul>
+         </li>
+      </ul>
+      <h4>Meeting rules:</h4>
+      <ul>
+         <li><b>Do NOT write code until</b> you completed your meeting and the minutes have been posted. <b>You
+               must show the TA your completed minutes if you want to leave the recitation early.</b> Recitations are the
+            only guaranteed time your team will be together and should not be wasted.</li>
+         <li>Be open to compromise.</li>
+         <li>Do NOT exclude team members. An important part of teamwork is learning how to maximize member's
+            strengths while minimizing their weaknesses. Pairing stronger and weaker coders has been shown to help both
+            students learn more and produce better results than if each were to work by themselves.</li>
+         <li><b><i>POLITELY</i></b> discuss problems as soon as they arise. Problems only become bigger and harder
+            to solve the longer they last. If your team cannot resolve a problem, talk to the TA. If the problem still
+            cannot be resolved, talk to the instructor. A lingering dispute is not an acceptable excuse for submitting
+            work late.</li>
+      </ul>
+      <h3>Team peer-evaluation mechanism</h3>
+      <p>The project submission for a team is graded as a whole, but each team member receives an individual grade
+         which is based on that submission grade and the peer evaluations received from their teammates. The peer
+         evaluation will be done via an on-line survey. Instructions for completing the on-line survey will be provided
+         at the end of each phase.</p>
+   </div>
+   <div class="section">
+      <a name="submit"></a>
+      <h2 class="name">How to Submit</h2>
+      <p>Phase #1 can only be submitted by the team member whose username comes first alphabetically. Submission by
+         other students will not be accepted nor can they be used to show that work was completed before the submission
+         deadline. We <b>strongly</b> encourage each team schedule a meeting which includes all members to do the
+         Web-CAT submission.
+      </p>
+      <p>The project submission must contain the entire Eclipse project including the properly Javadoc'd source
+         code. This includes both the implementation code AND the JUnit test code.</p>
+   </div>
+   <div class="section">
+      <a name="rubric"></a>
+      <h2 class="name">Phase #1 Grading Rubric</h2>
+      <p>The team grades for phase #1 will use the following rubric:</p>
+      <ul>
+         <li>Each team must write JUnit tests showing that their project can: [98 points]
+            <ul>
+               <li>Translate a pixel's row to the associated x-coordinate in the fractal (1 test per fractal) [4 *
+                  5 points = 20 points]</li>
+               <li>Translate a pixel's column to the associated y-coordinate in the fractal (1 test per fractal) [4
+                  * 5 points = 20 points]</li>
+               <li>Calculates the escape time for a coordinate whose distance from the origin never
+                  exceeds the escape distance [4 * 6 points = 24 points]
+                  <ul>
+                     <li>Mandelbrot Set: (0.3207031250000001, -0.07109374999999386)</li>
+                     <li>Julia Set: (1.0492187499999897, -0.234375)</li>
+                     <li>Burning Ship Set: (-1.7443359374999874, -0.017451171875000338)</li>
+                     <li>Multibrot Set: (0.5859375, 0.24375000000000108)</li>
+                  </ul>
+               </li>
+               <li>Calculates the escape time for a coordinate whose distance from the origin
+                  exceeds the escape distance after a single loop pass [3 * 6 points = 18 points]
+                  <ul>
+                     <li>Mandelbrot Set: (0.5946289062500001, 1.2949218750000122)</li>
+                     <li>Julia Set: (1.6933593749999853, 0.9765625)</li>
+                     <li>Multibrot Set: (0.9921875, 1.05625) </li>
+                  </ul>
+               </li>
+               <li>Calculates that none of the pixels in the Burning Ship set have an escape time of 0 or
+                  1 [8 points]</li>
+               <li>The method called to calculate the fractal returns a 2-d array with 512 rows and 512 columns (1 test per fractal) [4 * 2 points = 8 points]
+            </ul>
+         </li>
+         <li>All classes, methods, and instance variables are commented using Javadoc [2 points]</li>
+      </ul>
+      <p>Phase #1 can only be submitted by the team member whose username comes first alphabetically. Submission by
+         other students will not be accepted nor can they be used to show that work was completed before the submission
+         deadline. We <b>strongly</b> encourage each team schedule a meeting which includes all members to do the
+         Web-CAT submission.
+      </p>
+      <p>The project submission must contain the entire Eclipse project including the properly Javadoc'd source
+         code. This includes both the implementation code AND the JUnit test code.</p>
+   </div>
+</body>
+</html>

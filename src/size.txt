@@ -1,0 +1,6 @@
+Within src/code/ui/UI.java...
+1. An int named 'size' is created with a value of 2048 on line 36. This is the desired fractal pixel size.
+2. This int is used to create a new 'Dimension' variable, which is required to use the FractalPanel's setSize() method. On line 139.
+3. Finally, simply running the program will reveal fractals generated in the desired 2048x2048 size.
+
+The reason for using the size variable instead of hard coded constants, is because this variable could supposedly be used as an argument in the fractal classes which would create the x-coordinate and y-coordinate range for each pixel. It has not been implemented this phase, but it would allow for custom fractal sizes!
